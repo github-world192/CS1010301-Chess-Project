@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/10 00:35:48
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 01:37:20
+ *  Update Date: 2023/05/10 23:00:12
  *  Description: Pawn Piece Class
  */
 
@@ -17,9 +17,10 @@ namespace Chess
     class Pawn : public IPiece
     {
     public:
-        Pawn()
+        Pawn(TPlayer owner)
         {
-            this->_owner = TPlayer::kUndefined;
+            this->_type = TPiece::kPawn;
+            this->_owner = owner;
         }
 
     public:
