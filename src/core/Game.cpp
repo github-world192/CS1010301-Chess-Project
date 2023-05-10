@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 01:11:14
+ *  Update Date: 2023/05/10 21:13:58
  *  Description: Chess Class
  */
 
@@ -16,5 +16,5 @@ Game::Game()
 {
     this->_players.push_back(Player(TPlayer::kWhite));
     this->_players.push_back(Player(TPlayer::kBlack));
-    this->_currentPlayer = this->_players[0].type();
+    this->_currentPlayerType = TPlayer::kWhite;
 }
