@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:06:52
+ *  Update Date: 2023/05/11 03:05:35
  *  Description: Board Class
  */
 
@@ -42,7 +42,7 @@ void Board::moveWithoutCheck(const Position &from, const Position &to)
     _setPiece(to, (*this)(from));
 
     // Set fromPosition no piece
-    this->_board[from.y()][from.x()] = nullptr;
+    this->_board[from.y][from.x] = nullptr;
 }
 
 bool Board::_setPiece(const Position &pos, IPiece *piece)
@@ -55,7 +55,7 @@ bool Board::_setPiece(const Position &pos, IPiece *piece)
     if ( (*this)(pos) != nullptr )
         delete (*this)(pos);
 
-    this->_board[pos.y()][pos.x()] = piece;
+    this->_board[pos.y][pos.x] = piece;
 
     return true;
 }

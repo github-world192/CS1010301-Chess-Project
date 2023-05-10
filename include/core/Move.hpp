@@ -27,7 +27,7 @@ namespace Chess
             : _player(player), _fromPos(from), _toPos(to) {}
 
     public:
-        inline TPlayer getPlayer() const { return this->_player; }
+        inline TPlayer getPlayerType() const { return this->_player; }
         inline const Position &getFrom() const { return this->_fromPos; }
         inline const Position &getTo() const { return this->_toPos; }
     };

@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:12:50
+ *  Update Date: 2023/05/11 02:43:57
  *  Description: Board Class
  */
 
@@ -38,16 +38,39 @@ namespace Chess
         ~Board() { this->_free(); }
 
     public:
-        inline bool isPositionValid(const Position &pos) const
-        {
-            return ((pos.x() >= 0 && pos.x() <= this->_width - 1) &&
-                    (pos.y() >= 0 && pos.y() <= this->_height - 1));
-        }
-
         bool initialize();
         void clear();
 
+        inline bool isPositionValid(const Position &pos) const
+        {
+            return ((pos.x >= 0 && pos.x <= this->_width - 1) &&
+                    (pos.y >= 0 && pos.y <= this->_height - 1));
+        }
+
+        inline bool move(const Position &from, const Position &to)
+        {
+            this->moveWithoutCheck(from, to);
+            return true;
+        }
+
         void moveWithoutCheck(const Position &from, const Position &to);
+
+        inline std::string toString() const
+        {
+            std::string str;
+            for ( std::vector<IPiece *> i : this->_board )
+            {
+                for ( IPiece *j : i )
+                {
+                    if ( j == nullptr )
+                        str = str + "null" + '\t';
+                    else
+                        str = str + j->getTypeString() + '\t';
+                }
+                str += '\n';
+            }
+            return str;
+        }
 
     private:
         bool _setPiece(const Position &pos, IPiece *piece);
@@ -69,7 +92,7 @@ namespace Chess
     private:
         inline IPiece *operator()(const Position &pos)
         {
-            return this->_board[pos.y()][pos.x()];
+            return this->_board[pos.y][pos.x];
         }
     };
 
