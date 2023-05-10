@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 21:39:05
+ *  Update Date: 2023/05/10 22:22:59
  *  Description: GUI
  */
 
@@ -11,8 +11,8 @@
 
 #include <iostream>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
 GUI::GUI()
 {
