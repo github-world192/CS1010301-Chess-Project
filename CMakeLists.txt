@@ -16,6 +16,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories(BEFORE ${INCLUDE_DIR})
 
 set(SOURCES ${SRC_DIR}/main.cpp
+    ${SRC_DIR}/core/Board.cpp
     ${SRC_DIR}/core/Game.cpp
     ${SRC_DIR}/gui/GUI.cpp)
 

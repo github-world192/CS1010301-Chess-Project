@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:08:13
+ *  Update Date: 2023/05/11 02:12:50
  *  Description: Board Class
  */
 
@@ -45,7 +45,7 @@ namespace Chess
         }
 
         bool initialize();
-        inline void clear();
+        void clear();
 
         void moveWithoutCheck(const Position &from, const Position &to);
 
