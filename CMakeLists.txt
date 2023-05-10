@@ -15,7 +15,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(BEFORE ${INCLUDE_DIR})
 
-set(SOURCES ${SRC_DIR}/main.cpp ${SRC_DIR}/core/Game.cpp)
+set(SOURCES ${SRC_DIR}/main.cpp
+    ${SRC_DIR}/core/Game.cpp
+    ${SRC_DIR}/gui/GUI.cpp)
 
 if(PORT MATCHES "UltralightLinux")
     SET(CMAKE_SKIP_BUILD_RPATH FALSE)
@@ -29,8 +31,8 @@ if(PORT MATCHES "UltralightMac")
     SET(CMAKE_INSTALL_RPATH "@executable_path/")
 endif()
 
-# add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${SRC_DIR}/main.cpp)
-add_executable(${APP_NAME} MACOSX_BUNDLE ${SOURCES})
+# add_executable(${APP_NAME} MACOSX_BUNDLE ${SOURCES})
+add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${SOURCES})
 
 if(APPLE)
     # Enable High-DPI on macOS through our custom Info.plist template
