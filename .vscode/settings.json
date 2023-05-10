@@ -118,6 +118,8 @@
     "memory_resource": "cpp",
     "stop_token": "cpp",
     "cinttypes": "cpp",
-    "xlocmon": "cpp"
+    "xlocmon": "cpp",
+    "map": "cpp",
+    "unordered_set": "cpp"
   }
 }
