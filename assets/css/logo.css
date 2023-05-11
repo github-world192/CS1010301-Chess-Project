@@ -3,11 +3,14 @@
     position: relative;
     width: 1440px;
     height: 1024px;
+    margin: 0;
+    padding: 0;
     background: #5C2C2E;
-    overflow: hidden;               
+    overflow: hidden;           
 }
 
 
 .logo-logo {
     cursor: pointer;
 }
+
