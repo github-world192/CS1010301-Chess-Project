@@ -12,9 +12,8 @@
 /* Menu 的 Logo */
 .menu-logo {
     position: absolute;
-    left: 8%;
-    width: 1000px;
-    height: 200px; 
+    margin-top: -2%;
+    left: 2%;
 }
 
 .menu-group {
@@ -22,7 +21,7 @@
     width: 350px;
     height: 29px;
     padding: 10px;
-    left: 8%;
+    left: 5%;
     top: 20%;
     font-weight: 400;
     font-size: 30px;
@@ -35,7 +34,7 @@
     position: absolute;
     width: 172px;
     height: 215px;
-    left:8%;
+    left:5%;
     top:25%;
     font-weight: 400;
     line-height: 43px;
