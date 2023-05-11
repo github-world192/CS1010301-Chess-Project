@@ -6,7 +6,7 @@ function loadMenu(){
     logoBoard.style.display = 'none';
     menuBoard.style.display = 'block';
     gameBoard.style.display = 'none';
-    console.log("111");
+    console.log("進到Menu");
 }
 
 function start(){

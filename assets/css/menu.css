@@ -9,19 +9,19 @@
 }
 
 
-
 /* Menu 的 Logo */
 .menu-logo {
     position: absolute;
+    left: 8%;
     width: 1000px;
     height: 200px; 
 }
-
 
 .menu-group {
     position: absolute;
     width: 350px;
     height: 29px;
+    padding: 10px;
     left: 8%;
     top: 20%;
     font-weight: 400;
@@ -36,7 +36,7 @@
     width: 172px;
     height: 215px;
     left:8%;
-    top:35%;
+    top:25%;
     font-weight: 400;
     line-height: 43px;
     color: #FFFFFF;
