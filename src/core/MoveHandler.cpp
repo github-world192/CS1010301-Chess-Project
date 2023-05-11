@@ -3,11 +3,13 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 18:19:50
+ *  Update Date: 2023/05/11 20:16:34
  *  Description: Move Handler
  */
 
 #include "core/MoveHandler.hpp"
+
+#include <iostream>
 
 using namespace Chess;
 
@@ -109,8 +111,8 @@ std::vector<Position> MoveHandler::_getPawnKillableRelativePos(
     int8_t dir = pawn.isBlack() ? 1 : -1;
     // Killable position list
     std::vector<Position> killablePos = {
-        {1, 1 * dir},
-        {-1, -1 * dir},
+        Position(1, dir),
+        Position(-1, dir),
     };
 
     return killablePos;
