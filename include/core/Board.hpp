@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:43:57
+ *  Update Date: 2023/05/11 18:12:32
  *  Description: Board Class
  */
 
@@ -47,13 +47,7 @@ namespace Chess
                     (pos.y >= 0 && pos.y <= this->_height - 1));
         }
 
-        inline bool move(const Position &from, const Position &to)
-        {
-            this->moveWithoutCheck(from, to);
-            return true;
-        }
-
-        void moveWithoutCheck(const Position &from, const Position &to);
+        bool move(const Position &from, const Position &to);
 
         inline std::string toString() const
         {
@@ -75,6 +69,7 @@ namespace Chess
     private:
         bool _setPiece(const Position &pos, IPiece *piece);
         bool _removePiece(const Position &pos);
+        void _moveWithoutCheck(const Position &from, const Position &to);
 
         inline void _free()
         {
@@ -89,7 +84,7 @@ namespace Chess
             }
         }
 
-    private:
+    public:
         inline IPiece *operator()(const Position &pos)
         {
             return this->_board[pos.y][pos.x];

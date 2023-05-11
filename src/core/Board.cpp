@@ -3,11 +3,12 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 03:05:35
+ *  Update Date: 2023/05/11 18:25:51
  *  Description: Board Class
  */
 
 #include "core/Board.hpp"
+#include "core/MoveHandler.hpp"
 
 using namespace Chess;
 
@@ -28,21 +29,19 @@ void Board::clear()
     this->_free();
 }
 
-void Board::moveWithoutCheck(const Position &from, const Position &to)
+bool Board::move(const Position &from, const Position &to)
 {
-    // If fromPosition has no piece
+    // If positions invalid
+    if ( !(this->isPositionValid(from)) || !(this->isPositionValid(to)) )
+        return false;
+
+    // If fromPosition no piece
     if ( (*this)(from) == nullptr )
-        return;
+        return false;
 
-    // If toPosition has piece
-    if ( (*this)(to) != nullptr )
-        _removePiece(to);
+    this->_moveWithoutCheck(from, to);
 
-    // Set toPosition piece to fromPosition piece
-    _setPiece(to, (*this)(from));
-
-    // Set fromPosition no piece
-    this->_board[from.y][from.x] = nullptr;
+    return true;
 }
 
 bool Board::_setPiece(const Position &pos, IPiece *piece)
@@ -73,4 +72,22 @@ bool Board::_removePiece(const Position &pos)
     delete (*this)(pos);
 
     return true;
+}
+
+void Board::_moveWithoutCheck(const Position &from, const Position &to)
+{
+    // If fromPosition has no piece
+    if ( (*this)(from) == nullptr )
+        return;
+
+    // If toPosition has piece
+    if ( (*this)(to) != nullptr )
+        _removePiece(to);
+
+    // Set toPosition piece to fromPosition piece
+    _setPiece(to, (*this)(from));
+    (*this)(to)->setMoved(true);
+
+    // Set fromPosition no piece
+    this->_board[from.y][from.x] = nullptr;
 }

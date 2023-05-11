@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:07:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:09:26
+ *  Update Date: 2023/05/11 17:04:11
  *  Description: Piece Interface
  */
 
@@ -41,14 +41,13 @@ namespace Chess
         inline bool dead() const { return this->_killed; }
         inline void kill() { this->setKilled(true); }
         inline void alive() { this->setKilled(false); }
+        inline bool getMoved() const { return this->_killed; }
+        inline void setMoved(bool moved) { this->_killed = moved; }
 
         inline std::string getTypeString() const
         {
             return PieceUtil::typeToString(this->_type);
         }
-
-    public:
-        virtual bool isPositionValid(const Position &pos) const = 0;
     };
 
 }

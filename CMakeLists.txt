@@ -15,10 +15,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(BEFORE ${INCLUDE_DIR})
 
-set(SOURCES ${SRC_DIR}/main.cpp
+set(CHESS_SOURCES
     ${SRC_DIR}/core/Board.cpp
+    ${SRC_DIR}/core/MoveHandler.cpp
     ${SRC_DIR}/core/Game.cpp
     ${SRC_DIR}/gui/GUI.cpp)
+
+add_library(ChessCore SHARED ${CHESS_SOURCES})
+
+set(MAIN_SOURCES ${SRC_DIR}/main.cpp)
 
 if(PORT MATCHES "UltralightLinux")
     SET(CMAKE_SKIP_BUILD_RPATH FALSE)
@@ -32,8 +37,13 @@ if(PORT MATCHES "UltralightMac")
     SET(CMAKE_INSTALL_RPATH "@executable_path/")
 endif()
 
-# add_executable(${APP_NAME} MACOSX_BUNDLE ${SOURCES})
-add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${SOURCES})
+# add_executable(${APP_NAME} MACOSX_BUNDLE ${MAIN_SOURCES})
+add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${MAIN_SOURCES})
+target_link_libraries(${APP_NAME} PRIVATE ChessCore)
+
+# Copy ChessCore library to build bundle
+add_custom_command(TARGET ${APP_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy "*ChessCore.*" $<TARGET_FILE_DIR:${APP_NAME}>)
 
 if(APPLE)
     # Enable High-DPI on macOS through our custom Info.plist template
