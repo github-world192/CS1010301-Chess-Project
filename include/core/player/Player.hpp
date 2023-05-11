@@ -3,12 +3,13 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:56:47
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 01:10:13
+ *  Update Date: 2023/05/11 14:32:01
  *  Description: Player Class
  */
 
 #pragma once
 
+#include "../Board.hpp"
 #include "TPlayer.hpp"
 
 #include <string>
