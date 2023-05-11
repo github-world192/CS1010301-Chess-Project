@@ -12,10 +12,10 @@
 }
   
 .light-square {
-    background: #68B74D;
+    background: #D9D9D9;
 }
 .dark-square {
-    background: #C0C0C0;
+    background: #FFFFFF;
 }
 
 .grid-container {
@@ -44,9 +44,7 @@
     font-size: 24px;
     line-height: 29px;
     /* identical to box height */
-    
     text-align: center;
-    
     color: #FFFFFF;
 }
 
@@ -56,16 +54,13 @@
     height: 29px;
     left: 926px;
     top: 901px;
-    
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
     line-height: 29px;
     /* identical to box height */
-    
     text-align: center;
-    
     color: #FFFFFF;
     
 }
