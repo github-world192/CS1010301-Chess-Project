@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 22:22:59
+ *  Update Date: 2023/05/12 03:21:28
  *  Description: GUI
  */
 
@@ -46,7 +46,7 @@ GUI::GUI()
     ///
     /// Load a page into our overlay's View
     ///
-    overlay_->view()->LoadURL("file:///app.html");
+    overlay_->view()->LoadURL("file:///debug.html");
 
     ///
     /// Register our GUI instance as an AppListener so we can handle the
@@ -121,6 +121,31 @@ void GUI::OnDOMReady(ultralight::View *caller,
                      bool is_main_frame,
                      const String &url)
 {
+    // Acquire the JS execution context for the current page.
+    //
+    // This call will lock the execution context for the current
+    // thread as long as the Ref<> is alive.
+    //
+    RefPtr<JSContext> context = caller->LockJSContext();
+
+    // Get the underlying JSContextRef for use with the
+    // JavaScriptCore C API.
+    JSContextRef ctx = context->ctx();
+
+    // Get the global JavaScript object (aka 'window')
+    JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
+
+    /**
+     * Test
+     */
+    JSStringRef name_Test = JSStringCreateWithUTF8CString("apiTest");
+
+    JSObjectRef func_Test =
+        JSObjectMakeFunctionWithCallback(ctx, name_Test, GUI::Test);
+
+    JSObjectSetProperty(ctx, globalObj, name_Test, func_Test, 0, 0);
+
+    JSStringRelease(name_Test);
 }
 
 void GUI::OnChangeCursor(ultralight::View *caller,
@@ -143,4 +168,24 @@ void GUI::OnChangeTitle(ultralight::View *caller,
     /// We update the main window's title here.
     ///
     window_->SetTitle(title.utf8().data());
+}
+
+JSValueRef GUI::JsonToJSValue(JSContextRef ctx, const Json &json)
+{
+    JSStringRef jsonStr =
+        JSStringCreateWithUTF8CString(json.dump().c_str());
+    JSValueRef r = JSValueMakeFromJSONString(ctx, jsonStr);
+    JSStringRelease(jsonStr);
+    return r;
+}
+
+JSValueRef GUI::Test(JSContextRef ctx, JSObjectRef function,
+                     JSObjectRef thisObject, size_t argumentCount,
+                     const JSValueRef arguments[],
+                     JSValueRef *exception)
+{
+    Json data;
+    data["width"] = 5432;
+    data["height"] = 9487;
+    return GUI::JsonToJSValue(ctx, data);
 }

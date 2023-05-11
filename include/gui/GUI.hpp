@@ -1,8 +1,11 @@
 #pragma once
 
+#include "lib/json.hpp"
+
 #include <AppCore/AppCore.h>
 #include <JavaScriptCore/JavaScript.h>
 
+using Json = nlohmann::json;
 using namespace ultralight;
 
 class GUI : public AppListener,
@@ -51,4 +54,32 @@ protected:
     RefPtr<App> app_;
     RefPtr<Window> window_;
     RefPtr<Overlay> overlay_;
+
+private:
+    static JSValueRef JsonToJSValue(JSContextRef ctx, const Json &json);
+
+    static JSValueRef Test(JSContextRef ctx, JSObjectRef function,
+                           JSObjectRef thisObject, size_t argumentCount,
+                           const JSValueRef arguments[],
+                           JSValueRef *exception);
+
+    // static JSValueRef GetBoardWidth(JSContextRef ctx, JSObjectRef function,
+    //                                 JSObjectRef thisObject, size_t argumentCount,
+    //                                 const JSValueRef arguments[],
+    //                                 JSValueRef *exception);
+
+    // static JSValueRef GetBoardHeight(JSContextRef ctx, JSObjectRef function,
+    //                                  JSObjectRef thisObject, size_t argumentCount,
+    //                                  const JSValueRef arguments[],
+    //                                  JSValueRef *exception);
+
+    // static JSValueRef GetBoardPieceType(JSContextRef ctx, JSObjectRef function,
+    //                                     JSObjectRef thisObject, size_t argumentCount,
+    //                                     const JSValueRef arguments[],
+    //                                     JSValueRef *exception);
+
+    // static JSValueRef GetBoardPieceOwner(JSContextRef ctx, JSObjectRef function,
+    //                                      JSObjectRef thisObject, size_t argumentCount,
+    //                                      const JSValueRef arguments[],
+    //                                      JSValueRef *exception);
 };
