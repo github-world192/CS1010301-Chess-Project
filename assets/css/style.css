@@ -6,79 +6,13 @@
 body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(0, 0, 0);
+    width: 1440px;
+    height: 1024px;
+    overflow: hidden;
+    display:flex;
+    background-color: rgb(255, 255, 255);
     color: black;
     cursor: default;
     font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
 }
-
-.game-board {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background: #000000;
-}
-
-.menu-board {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background: #000000;
-}
-
-.menu-bg-img {
-    box-sizing: border-box;
-    position: absolute;
-    width: 1280px;
-    height: 670px;
-    left: 608px;
-    top: 354px;
-    background: url(./menu-bg-img.png);
-    box-shadow: inset -22px 14px 22px 161px rgba(0, 0, 0, 0.25);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-  
-.game-logo{
-    position: absolute;
-    width: 529px;
-    height: 116px;
-    left: 88px;
-    top: 196px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 96px;
-    line-height: 116px;
-    text-align: center;
-    color: #FFFFFF;
-}
-  
-.piece-square {
-    width: 75px;
-    height: 75px;
-}
-  
-.light-square {
-    background: #68B74D;
-}
-.dark-square {
-    background: #C0C0C0;
-}
-
-.grid-container {
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    display: grid;
-}
-.grid-item {
-    display: flex;
-    font-size: 30px;
-    margin: auto;
-}
-
-
 

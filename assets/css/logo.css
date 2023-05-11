@@ -1,0 +1,13 @@
+/* Logo 面板 */
+.logo-board {
+    position: relative;
+    width: 1440px;
+    height: 1024px;
+    background: #5C2C2E;
+    overflow: hidden;               
+}
+
+
+.logo-logo {
+    cursor: pointer;
+}
