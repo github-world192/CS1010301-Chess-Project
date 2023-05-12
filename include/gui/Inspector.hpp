@@ -1,0 +1,52 @@
+#pragma once
+
+#include <AppCore/AppCore.h>
+
+using namespace ultralight;
+
+class Inspector : public WindowListener,
+                  public LoadListener,
+                  public ViewListener
+{
+public:
+    Inspector(RefPtr<App> app);
+
+    virtual ~Inspector();
+
+    // This is called when the window is closing.
+    virtual void OnClose(ultralight::Window *window) override;
+
+    // This is called whenever the window resizes.
+    virtual void OnResize(ultralight::Window *window, uint32_t width, uint32_t height) override;
+
+    // This is called when the page finishes a load in one of its frames.
+    virtual void OnFinishLoading(ultralight::View *caller,
+                                 uint64_t frame_id,
+                                 bool is_main_frame,
+                                 const String &url) override;
+
+    // This is called when the DOM has loaded in one of its frames.
+    virtual void OnDOMReady(ultralight::View *caller,
+                            uint64_t frame_id,
+                            bool is_main_frame,
+                            const String &url) override;
+
+    // This is called when the page requests to change the Cursor.
+    virtual void OnChangeCursor(ultralight::View *caller,
+                                Cursor cursor) override;
+
+    virtual void OnChangeTitle(ultralight::View *caller,
+                               const String &title) override;
+
+    // void SetWindow(RefPtr<Window> window);
+
+    RefPtr<Window> GetWindow() const;
+
+    // void SetOverlay(RefPtr<Overlay> overlay);
+
+    RefPtr<Overlay> GetOverlay() const;
+
+protected:
+    RefPtr<Window> window_;
+    RefPtr<Overlay> overlay_;
+};

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Inspector.hpp"
 #include "lib/json.hpp"
 
 #include <AppCore/AppCore.h>
@@ -50,10 +51,14 @@ public:
     virtual void OnChangeTitle(ultralight::View *caller,
                                const String &title) override;
 
+    virtual RefPtr<View> OnCreateInspectorView(ultralight::View *caller, bool is_local,
+                                               const String &inspected_url) override;
+
 protected:
     RefPtr<App> app_;
     RefPtr<Window> window_;
     RefPtr<Overlay> overlay_;
+    Inspector *inspector_;
 
 private:
     static JSValueRef JsonToJSValue(JSContextRef ctx, const Json &json);
