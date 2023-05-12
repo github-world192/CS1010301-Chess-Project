@@ -1,8 +1,8 @@
 /* Game 版面 */
 .game-board {
     position: absolute;
-    width: 1440px;
-    height: 1024px;
+    width: 100%;
+    height: 100%;
     background: #5C2C2E;
 }
 
@@ -33,49 +33,66 @@
 
 .game-player1-name-container {
     position: absolute;
-    width: 161px;
-    height: 29px;
-    left: 350px;
-    top: 96px;
-    
+    width: 10%;
+    height: 5%;
+    left: 25%;
+    top: 15%;
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 400;
     font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player1-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 65%;
+    top: 15%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
     text-align: center;
     color: #FFFFFF;
 }
 
 .game-player2-name-container {
     position: absolute;
-    width: 165px;
-    height: 29px;
-    left: 926px;
-    top: 901px;
+    width: 10%;
+    height: 5%;
+    left: 65%;
+    top: 80%;
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 400;
     font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
     text-align: center;
     color: #FFFFFF;
-    
+}
+
+.game-player2-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 25%;
+    top: 80%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 .back-menu-button {
     position: absolute;
-    width: 85px;
-    height: 39px;
-    left: 1316px;
-    top: 25px;
+    width: 10%;
+    height: 5%;
+    left: 85%;
+    top: 3%;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 32px;
-    line-height: 39px;
     text-align: center;
     background-color: #5C2C2E;
     border: none;
@@ -83,36 +100,5 @@
     color: #FFFFFF;
 }
 
-.game-player1-time-container {
-    position: absolute;
-    width: 70px;
-    height: 29px;
-    left: 987px;
-    top: 96px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
-    text-align: center;
-    letter-spacing: 0.065em;
-    color: #FFFFFF;
-}
 
-.game-player2-time-container {
-    position: absolute;
-    width: 70px;
-    height: 29px;
-    left: 385px;
-    top: 901px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
-    text-align: center;
-    letter-spacing: 0.065em;
-    color: #FFFFFF;
-}
+
