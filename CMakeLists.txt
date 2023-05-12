@@ -7,11 +7,9 @@ set(CMAKE_DIR "cmake")
 set(INCLUDE_DIR "include")
 set(APP_NAME ${CMAKE_PROJECT_NAME})
 
-include(${CMAKE_DIR}/Ultralight.cmake)
+add_compile_definitions("DEBUG=$<CONFIG:Debug>")
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+include(${CMAKE_DIR}/Ultralight.cmake)
 
 include_directories(BEFORE ${INCLUDE_DIR})
 
@@ -19,6 +17,7 @@ set(CHESS_SOURCES
     ${SRC_DIR}/core/Board.cpp
     ${SRC_DIR}/core/MoveHandler.cpp
     ${SRC_DIR}/core/Game.cpp
+    ${SRC_DIR}/gui/Inspector.cpp
     ${SRC_DIR}/gui/GUI.cpp)
 
 add_library(ChessCore SHARED ${CHESS_SOURCES})

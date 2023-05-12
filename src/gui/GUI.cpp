@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/12 03:21:28
+ *  Update Date: 2023/05/13 06:14:16
  *  Description: GUI
  */
 
@@ -71,10 +71,24 @@ GUI::GUI()
     /// View's OnChangeCursor and OnChangeTitle events below.
     ///
     overlay_->view()->set_view_listener(this);
+
+#if DEBUG
+    // Start inspector whe debugging
+    // app_->renderer()->StartRemoteInspectorServer("127.0.0.1", 19998);
+    overlay_->view()->CreateLocalInspectorView();
+#endif
+}
+
+RefPtr<View> GUI::OnCreateInspectorView(ultralight::View *caller, bool is_local,
+                                        const String &inspected_url)
+{
+    inspector_ = new Inspector(app_);
+    return inspector_->GetOverlay()->view();
 }
 
 GUI::~GUI()
 {
+    delete inspector_;
 }
 
 void GUI::Run()
