@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 17:58:14
+ *  Update Date: 2023/05/14 02:03:57
  *  Description: Game Class
  */
 
@@ -68,6 +68,10 @@ namespace Chess
             else
                 this->_currentPlayerType = TPlayer::kWhite;
         }
+
+        inline const Board &getBoard() const { return this->_board; }
+
+        std::vector<Position> getBoardPieceMovablePos(const Position &pos) const;
 
     public:
         bool makeMove(const Move &move);

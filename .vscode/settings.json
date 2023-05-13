@@ -122,6 +122,13 @@
     "map": "cpp",
     "unordered_set": "cpp",
     "coroutine": "cpp",
-    "source_location": "cpp"
+    "source_location": "cpp",
+    "any": "cpp",
+    "charconv": "cpp",
+    "format": "cpp",
+    "forward_list": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "valarray": "cpp"
   }
 }

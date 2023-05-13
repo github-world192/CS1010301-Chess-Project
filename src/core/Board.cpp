@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 18:25:51
+ *  Update Date: 2023/05/13 18:18:02
  *  Description: Board Class
  */
 
@@ -90,4 +90,20 @@ void Board::_moveWithoutCheck(const Position &from, const Position &to)
 
     // Set fromPosition no piece
     this->_board[from.y][from.x] = nullptr;
+}
+
+void Board::_free()
+{
+    for ( size_t i = 0; i < this->_board.size(); ++i )
+    {
+        for ( size_t j = 0; j < this->_board[i].size(); ++j )
+        {
+            IPiece *piece = this->_board[i][j];
+            // Delete all pieces
+            if ( piece != nullptr )
+            {
+                delete piece;
+            }
+        }
+    }
 }
