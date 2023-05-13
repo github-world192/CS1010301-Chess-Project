@@ -3,16 +3,21 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/13 06:14:16
+ *  Update Date: 2023/05/14 02:16:14
  *  Description: GUI
  */
 
 #include "gui/GUI.hpp"
+#include "core/player/PlayerUtil.hpp"
 
 #include <iostream>
+#include <string>
+#include <vector>
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
+Game game;
 
 GUI::GUI()
 {
@@ -88,7 +93,8 @@ RefPtr<View> GUI::OnCreateInspectorView(ultralight::View *caller, bool is_local,
 
 GUI::~GUI()
 {
-    delete inspector_;
+    if ( inspector_ != nullptr )
+        delete inspector_;
 }
 
 void GUI::Run()
@@ -150,6 +156,21 @@ void GUI::OnDOMReady(ultralight::View *caller,
     JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
 
     /**
+     * GetCurrentPlayer
+     */
+    JSStringRef name_GetCurrentPlayer =
+        JSStringCreateWithUTF8CString("apiGetCurrentPlayer");
+
+    JSObjectRef func_GetCurrentPlayer =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetCurrentPlayer,
+                                         GUI::GetCurrentPlayer);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetCurrentPlayer,
+                        func_GetCurrentPlayer, 0, 0);
+
+    JSStringRelease(name_GetCurrentPlayer);
+
+    /**
      * Test
      */
     JSStringRef name_Test = JSStringCreateWithUTF8CString("apiTest");
@@ -160,6 +181,48 @@ void GUI::OnDOMReady(ultralight::View *caller,
     JSObjectSetProperty(ctx, globalObj, name_Test, func_Test, 0, 0);
 
     JSStringRelease(name_Test);
+
+    /**
+     * GetBoard
+     */
+    JSStringRef name_GetBoard = JSStringCreateWithUTF8CString("apiGetBoard");
+
+    JSObjectRef func_GetBoard =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetBoard, GUI::GetBoard);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetBoard, func_GetBoard, 0, 0);
+
+    JSStringRelease(name_GetBoard);
+
+    /**
+     * GetBoardPieceMovablePos
+     */
+    JSStringRef name_GetBoardPieceMovablePos =
+        JSStringCreateWithUTF8CString("apiGetBoardPieceMovablePos");
+
+    JSObjectRef func_GetBoardPieceMovablePos =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetBoardPieceMovablePos,
+                                         GUI::GetBoardPieceMovablePos);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetBoardPieceMovablePos,
+                        func_GetBoardPieceMovablePos, 0, 0);
+
+    JSStringRelease(name_GetBoardPieceMovablePos);
+
+    /**
+     * BoardMovePiece
+     */
+    JSStringRef name_BoardMovePiece =
+        JSStringCreateWithUTF8CString("apiBoardMovePiece");
+
+    JSObjectRef func_BoardMovePiece =
+        JSObjectMakeFunctionWithCallback(ctx, name_BoardMovePiece,
+                                         GUI::BoardMovePiece);
+
+    JSObjectSetProperty(ctx, globalObj, name_BoardMovePiece,
+                        func_BoardMovePiece, 0, 0);
+
+    JSStringRelease(name_BoardMovePiece);
 }
 
 void GUI::OnChangeCursor(ultralight::View *caller,
@@ -202,4 +265,114 @@ JSValueRef GUI::Test(JSContextRef ctx, JSObjectRef function,
     data["width"] = 5432;
     data["height"] = 9487;
     return GUI::JsonToJSValue(ctx, data);
+}
+
+JSValueRef GUI::GetCurrentPlayer(JSContextRef ctx, JSObjectRef function,
+                                 JSObjectRef thisObject, size_t argumentCount,
+                                 const JSValueRef arguments[],
+                                 JSValueRef *exception)
+{
+    std::string player = PlayerUtil::typeToString(game.getCurrentPlayerType());
+
+    JSStringRef r_str = JSStringCreateWithUTF8CString(player.c_str());
+    JSValueRef r = JSValueMakeString(ctx, r_str);
+    JSStringRelease(r_str);
+
+    return r;
+}
+
+JSValueRef GUI::GetBoard(JSContextRef ctx, JSObjectRef function,
+                         JSObjectRef thisObject, size_t argumentCount,
+                         const JSValueRef arguments[],
+                         JSValueRef *exception)
+{
+    size_t width = game.getBoard().width();
+    size_t height = game.getBoard().height();
+    Json data;
+    data["width"] = width;
+    data["height"] = height;
+
+    Json boardData;
+    Position pos;
+    for ( pos.y = 0; pos.y < height; ++pos.y )
+    {
+        Json rowData;
+        for ( pos.x = 0; pos.x < width; ++pos.x )
+        {
+            Json pieceData;
+            pieceData["type"] = "null";
+            pieceData["owner"] = "null";
+            pieceData["movable"] = false;
+            if ( game.getBoard().isPositionPiece(pos) )
+            {
+                pieceData["type"] =
+                    PieceUtil::typeToString(game.getBoard()(pos)->type());
+                pieceData["owner"] =
+                    PlayerUtil::typeToString(game.getBoard()(pos)->getOwner());
+                pieceData["movable"] =
+                    (game.getBoard()(pos)->getOwner() == game.getCurrentPlayerType());
+            }
+            rowData.push_back(pieceData);
+        }
+        boardData.push_back(rowData);
+    }
+    data["board"] = boardData;
+
+    return GUI::JsonToJSValue(ctx, data);
+}
+
+JSValueRef GUI::GetBoardPieceMovablePos(JSContextRef ctx, JSObjectRef function,
+                                        JSObjectRef thisObject, size_t argumentCount,
+                                        const JSValueRef arguments[],
+                                        JSValueRef *exception)
+{
+    // x, y
+    if ( argumentCount < 2 ||
+         !JSValueIsNumber(ctx, arguments[0]) ||
+         !JSValueIsNumber(ctx, arguments[1]) )
+        return JSValueMakeBoolean(ctx, false);
+
+    Position pos;
+    pos.x = JSValueToNumber(ctx, arguments[0], exception);
+    pos.y = JSValueToNumber(ctx, arguments[1], exception);
+
+    std::vector<Position> movablePos = game.getBoardPieceMovablePos(pos);
+
+    Json data;
+    for ( const Position &p : movablePos )
+    {
+        Json pJson;
+        pJson["x"] = p.x;
+        pJson["y"] = p.y;
+        data.push_back(pJson);
+    }
+
+    return GUI::JsonToJSValue(ctx, data);
+}
+
+JSValueRef GUI::BoardMovePiece(JSContextRef ctx, JSObjectRef function,
+                               JSObjectRef thisObject, size_t argumentCount,
+                               const JSValueRef arguments[],
+                               JSValueRef *exception)
+{
+    // from_x, from_y, to_x, to_y
+    if ( argumentCount < 4 ||
+         !JSValueIsNumber(ctx, arguments[0]) ||
+         !JSValueIsNumber(ctx, arguments[1]) ||
+         !JSValueIsNumber(ctx, arguments[2]) ||
+         !JSValueIsNumber(ctx, arguments[3]) )
+        return JSValueMakeBoolean(ctx, false);
+
+    Position fromPos, toPos;
+    fromPos.x = JSValueToNumber(ctx, arguments[0], exception);
+    fromPos.y = JSValueToNumber(ctx, arguments[1], exception);
+    toPos.x = JSValueToNumber(ctx, arguments[2], exception);
+    toPos.y = JSValueToNumber(ctx, arguments[3], exception);
+
+    Move move(game.getCurrentPlayerType(), fromPos, toPos);
+    bool success = game.makeMove(move);
+
+    JSValueRef r = JSValueMakeBoolean(ctx, success);
+
+    return r;
 }

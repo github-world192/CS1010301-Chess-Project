@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Inspector.hpp"
+#include "core/Game.hpp"
 #include "lib/json.hpp"
 
 #include <AppCore/AppCore.h>
@@ -8,6 +9,7 @@
 
 using Json = nlohmann::json;
 using namespace ultralight;
+using namespace Chess;
 
 class GUI : public AppListener,
             public WindowListener,
@@ -61,12 +63,34 @@ protected:
     Inspector *inspector_;
 
 private:
+    static GUI instance_;
+
     static JSValueRef JsonToJSValue(JSContextRef ctx, const Json &json);
 
     static JSValueRef Test(JSContextRef ctx, JSObjectRef function,
                            JSObjectRef thisObject, size_t argumentCount,
                            const JSValueRef arguments[],
                            JSValueRef *exception);
+
+    static JSValueRef GetCurrentPlayer(JSContextRef ctx, JSObjectRef function,
+                                       JSObjectRef thisObject, size_t argumentCount,
+                                       const JSValueRef arguments[],
+                                       JSValueRef *exception);
+
+    static JSValueRef GetBoard(JSContextRef ctx, JSObjectRef function,
+                               JSObjectRef thisObject, size_t argumentCount,
+                               const JSValueRef arguments[],
+                               JSValueRef *exception);
+
+    static JSValueRef GetBoardPieceMovablePos(JSContextRef ctx, JSObjectRef function,
+                                              JSObjectRef thisObject, size_t argumentCount,
+                                              const JSValueRef arguments[],
+                                              JSValueRef *exception);
+
+    static JSValueRef BoardMovePiece(JSContextRef ctx, JSObjectRef function,
+                                     JSObjectRef thisObject, size_t argumentCount,
+                                     const JSValueRef arguments[],
+                                     JSValueRef *exception);
 
     // static JSValueRef GetBoardWidth(JSContextRef ctx, JSObjectRef function,
     //                                 JSObjectRef thisObject, size_t argumentCount,
