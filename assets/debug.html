@@ -3,9 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>Chess Debug</title>
+    <link rel=stylesheet type="text/css" href="./css/jquery-ui.min.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
+    <script src="./js/jquery-ui.min.js"></script>
 
     <style>
+        *:not(input) {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+        }
+
         table,
         td {
             border: 1px solid #333;
@@ -16,11 +29,30 @@
             background-color: #333;
             color: #fff;
         }
+
+        .piece-piece {
+            cursor: -webkit-grab;
+            cursor: grab;
+        }
+
+        .piece-piece-movable {
+            font-weight: bold;
+        }
+
+        .piece-container-movable {
+            background-color: lightgreen;
+        }
+
+        .piece-container-movable-hover {
+            background-color: green;
+        }
     </style>
 </head>
 
 <body>
-    <table>
+    <button onClick="test();">Update</button>
+    <p>Current Player: <span id="current_player"></span></p>
+    <table id="board">
         <tbody>
             <tr>
                 <td>?</td>
@@ -35,8 +67,6 @@
         </tbody>
     </table>
 
-    <span id="test_message">Test Message</span>
-    <button onClick="test();">Test</button>
 
     <script src="./js/api.js"></script>
     <script src="./js/debug.js"></script>

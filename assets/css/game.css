@@ -1,0 +1,104 @@
+/* Game 版面 */
+.game-board {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #5C2C2E;
+}
+
+.piece-square {
+    width: 75px;
+    height: 75px;
+}
+  
+.light-square {
+    background: #D9D9D9;
+}
+.dark-square {
+    background: #FFFFFF;
+}
+
+.grid-container {
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    display: grid;
+}
+.grid-item {
+    display: flex;
+    font-size: 30px;
+    margin: auto;
+}
+
+.game-player1-name-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 25%;
+    top: 15%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player1-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 65%;
+    top: 15%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player2-name-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 65%;
+    top: 80%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player2-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 25%;
+    top: 80%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.back-menu-button {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left: 85%;
+    top: 3%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    text-align: center;
+    background-color: #5C2C2E;
+    border: none;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+
+

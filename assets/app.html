@@ -4,11 +4,146 @@
     <meta charset="utf-8">
     <title>Chess</title>
     <link rel=stylesheet type="text/css" href="./css/style.css">
+    <link rel=stylesheet type="text/css" href="./css/logo.css">
+    <link rel=stylesheet type="text/css" href="./css/menu.css">
+    <link rel=stylesheet type="text/css" href="./css/game.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
-    <h1>Chess Game</h1>
+    <!-- Logo 面板 -->
+    <div class="logo-board" id="logo-board">
+        <div class="logo-logo" onclick="loadMenu()">
+            <!-- 人物圖 -->
+            <img src="./image/logo-logo.png" alt=""> -->
+        </div>
+    </div>
+
+    <!-- Menu 面版 -->
+    <div class="menu-board" id="menu-board" style="display: none;">
+        <!-- Menu Logo -->
+        <div class="menu-logo">
+            <img src="./image/menu-logo.png" alt="">
+        </div>
+
+        <!-- Menu group original-->
+        <div class="menu-group">
+            <span>A Group 4 Games Original</span>
+        </div>
+
+        <!-- Menu button 容器-->
+        <div class="menu-button-container">
+            <button onclick="start();"> <span>Game Start </span></button>
+            <button onclick="online();"> <span>Online</span></button>
+            <button onclick="options();"> <span>Options</span></button>
+            <button onclick="about();"> <span>About</span></button>
+            <button onclick="exit();"> <span>Exit</span></button>
+        </div>
+
+        <!-- Menu 配圖容器 -->
+        <div class="menu-bg-img-container">
+            <img id="menu-player" src="image/menu-player.png" alt="">
+            <img id="menu-chessboard" src="image/menu-chessboard.png" alt="">
+        </div>
+
+    </div>
+    
+    <!-- Game 面版 -->
+    <div class="game-board" id="game-board" style="display: none;">
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+            </div>
+            <div class="grid-item">
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+                <div class="piece-square dark-square"></div>
+                <div class="piece-square light-square"></div>
+            </div>
+        </div>
+
+        <div class="game-player1-name-container">Player1 Name</div>
+        <div class="game-player2-name-container">Player2 Name</div>
+        <button class="back-menu-button" onclick="loadMenu()">
+                Menu
+        </button>
+        <div class="game-player1-time-container">10:00</div>
+        <div class="game-player2-time-container">10:00</div>
+
+    </div>
+
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

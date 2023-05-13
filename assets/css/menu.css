@@ -1,0 +1,120 @@
+/* Menu 面板 */
+.menu-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #5C2C2E;
+    overflow: hidden;       
+    z-index: 1;             /* 在背景圖上 */           
+}
+
+
+/* Menu 的 Logo 容器 */
+.menu-logo {
+    position: absolute;
+    margin-top: -2%;
+    left: 2%;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-logo img {
+    width: 70%;
+    height: 30%;
+    object-fit: contain; 
+}
+
+.menu-group {
+    width: 25%;
+    height: 5%;
+    position: absolute;
+    left: 31%;
+    top: 20%;
+    font-size: 30px;
+    text-align: right;
+    color: #FFFFFF;
+}
+
+.menu-group span {
+    width: 10%;
+    height: 5%;
+    object-fit: contain; 
+}
+
+.menu-button-container {
+    position: absolute;
+    width: 20%;
+    height: 50%;
+    left:5%;
+    top:25%;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.menu-button-container button {
+    display: block;
+    border-radius: 4px;
+    background-color: #5C2C2E;
+    border: none;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 12%;
+    font-size: 32px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.menu-button-container button span{
+    cursor: pointer;
+    position: relative;
+    transition: 0.5s;
+}
+
+.menu-button-container button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -5%;
+    transition: 0.5s;
+}
+
+.menu-button-container button:hover span {
+    padding-left: 25px;
+}
+  
+.menu-button-container button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+/* Menu 的配景容器 */
+.menu-bg-img-container {
+    position: absolute;
+    margin-top: 25%;
+    left: 40%;
+    width: 100%;
+    height: 100%;   
+    z-index: -1;  
+}
+
+.menu-bg-img-container img {
+    width: 70%;
+    height: 50%;
+    object-fit: contain; 
+}
+
+#menu-chessboard {  
+    position: relative;
+    /* margin-left: -10%; */ /* 等待美術待調整 */
+    z-index: 1;
+}
+
+#menu-player {
+    position: absolute;
+    /* margin-top: -10%; */ /* 等待美術待調整 */
+    z-index: 2;
+}
+
+
