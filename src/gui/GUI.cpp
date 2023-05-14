@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/14 02:16:14
+ *  Update Date: 2023/05/14 08:05:10
  *  Description: GUI
  */
 
@@ -51,7 +51,7 @@ GUI::GUI()
     ///
     /// Load a page into our overlay's View
     ///
-    overlay_->view()->LoadURL("file:///debug.html");
+    overlay_->view()->LoadURL("file:///app.html");
 
     ///
     /// Register our GUI instance as an AppListener so we can handle the

@@ -4,18 +4,32 @@
     <meta charset="utf-8">
     <title>Chess</title>
     <link rel=stylesheet type="text/css" href="./css/style.css">
-    <link rel=stylesheet type="text/css" href="./css/logo.css">
+    <link rel=stylesheet type="text/css" href="./css/startup.css">
+    <link rel=stylesheet type="text/css" href="./css/cover.css">
     <link rel=stylesheet type="text/css" href="./css/menu.css">
     <link rel=stylesheet type="text/css" href="./css/game.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
-    <!-- Logo 面板 -->
-    <div class="logo-board" id="logo-board">
-        <div class="logo-logo" onclick="loadMenu()">
-            <!-- 人物圖 -->
-            <img src="./image/logo-logo.png" alt=""> -->
+    <!-- Startup 面板 -->
+    <div class="startup-board" id="startup-board" style="display: none;">
+        <div class="startup-startup">
+            <!-- Game Studio Logo -->
+            <img src="./image/startup-group4-logo.png" alt="">
+        </div>
+    </div>
+
+    <!-- Cover 面板 -->
+    <div class="cover-board" id="cover-board" style="display: none;">
+        <div class="cover-cover" onclick="loadMenu()">
+            <!-- Cover Image -->
+            <div class="cover-cover-image-container">
+                <img src="./image/cover-cover.png" alt="">
+            </div>
+            <div class="cover-cover-hint-container" id="cover-cover-hint-container">
+                Press any key to start
+            </div>
         </div>
     </div>
 
@@ -47,7 +61,7 @@
         </div>
 
     </div>
-    
+
     <!-- Game 面版 -->
     <div class="game-board" id="game-board" style="display: none;">
         <div class="grid-container">
@@ -136,7 +150,7 @@
         <div class="game-player1-name-container">Player1 Name</div>
         <div class="game-player2-name-container">Player2 Name</div>
         <button class="back-menu-button" onclick="loadMenu()">
-                Menu
+            Menu
         </button>
         <div class="game-player1-time-container">10:00</div>
         <div class="game-player2-time-container">10:00</div>
