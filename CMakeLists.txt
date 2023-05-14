@@ -7,6 +7,10 @@ set(CMAKE_DIR "cmake")
 set(INCLUDE_DIR "include")
 set(APP_NAME ${CMAKE_PROJECT_NAME})
 
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 add_compile_definitions("DEBUG=$<CONFIG:Debug>")
 
 include(${CMAKE_DIR}/Ultralight.cmake)
@@ -40,9 +44,11 @@ endif()
 add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${MAIN_SOURCES})
 target_link_libraries(${APP_NAME} PRIVATE ChessCore)
 
-# Copy ChessCore library to build bundle
-add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "*ChessCore.*" $<TARGET_FILE_DIR:${APP_NAME}>)
+if(APPLE)
+    # Copy ChessCore library to build bundle
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "*ChessCore.*" $<TARGET_FILE_DIR:${APP_NAME}>)
+endif()
 
 if(APPLE)
     # Enable High-DPI on macOS through our custom Info.plist template
