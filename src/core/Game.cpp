@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/14 02:03:50
+ *  Update Date: 2023/05/16 03:11:58
  *  Description: Chess Class
  */
 
@@ -16,10 +16,7 @@ using namespace Chess;
 
 Game::Game()
 {
-    this->_players.push_back(Player(TPlayer::kWhite));
-    this->_players.push_back(Player(TPlayer::kBlack));
-    this->_currentPlayerType = TPlayer::kWhite;
-    this->_board.initialize();
+    this->initialize();
 }
 
 std::vector<Position> Game::getBoardPieceMovablePos(const Position &pos) const

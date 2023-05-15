@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/14 02:03:57
+ *  Update Date: 2023/05/16 03:15:57
  *  Description: Game Class
  */
 
@@ -30,6 +30,15 @@ namespace Chess
         Game();
 
     public:
+        inline void initialize()
+        {
+            this->_players.clear();
+            this->_players.push_back(Player(TPlayer::kWhite));
+            this->_players.push_back(Player(TPlayer::kBlack));
+            this->_currentPlayerType = TPlayer::kWhite;
+            this->_board.loadDefaultBoard();
+        }
+
         inline bool isPlayerExists(TPlayer type) const
         {
             for ( const Player &p : this->_players )
