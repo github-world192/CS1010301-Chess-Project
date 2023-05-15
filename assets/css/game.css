@@ -1,4 +1,9 @@
 /* Game 版面 */
+:root {
+    --game-board-piece-spot-light-background: #ffffff;
+    --game-board-piece-spot-dark-background: #D9D9D9;
+}
+
 .game-board {
     position: absolute;
     width: 100%;
@@ -6,37 +11,59 @@
     background: #5C2C2E;
 }
 
-.piece-square {
-    width: 75px;
-    height: 75px;
-}
-  
-.light-square {
-    background: #D9D9D9;
-}
-.dark-square {
-    background: #FFFFFF;
-}
-
-/* 棋子圖片容器 */
-.chess img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-
-.grid-container {
+.game-board-grid-container {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
     display: grid;
 }
-.grid-item {
+.game-board-grid-item {
     display: flex;
     font-size: 30px;
     margin: auto;
+}
+
+.game-board-piece-container {
+    width: 75px;
+    height: 75px;
+    padding: 4px;
+    transition: box-shadow 0.5s;
+}
+
+.game-board-piece-container-droppable {
+    box-shadow: inset 0px 0px 0px 4px darkgray;
+}
+
+.game-board-piece-container-droppable-hover {
+    animation: none;
+    box-shadow: inset 0px 0px 0px 10px gray;
+}
+
+.game-board-piece-piece-movable {
+    cursor: pointer;
+}
+
+.game-board-piece-piece img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.game-board-grid-item:nth-child(odd) .game-board-piece-spot:nth-child(odd) {
+    background: var(--game-board-piece-spot-dark-background);
+}
+
+.game-board-grid-item:nth-child(odd) .game-board-piece-spot:nth-child(even) {
+    background: var(--game-board-piece-spot-light-background);
+}
+
+.game-board-grid-item:nth-child(even) .game-board-piece-spot:nth-child(odd) {
+    background: var(--game-board-piece-spot-light-background);
+}
+
+.game-board-grid-item:nth-child(even) .game-board-piece-spot:nth-child(even) {
+    background: var(--game-board-piece-spot-dark-background);
 }
 
 .game-player1-name-container {
@@ -108,5 +135,7 @@
     color: #FFFFFF;
 }
 
-
-
+@keyframes game-hightlight-piece-container {
+    0%, 100% { box-shadow: inset 0px 0px 0px 4px rgba(0, 0, 0, 0); }
+    50% { box-shadow: inset 0px 0px 0px 4px darkgray; }
+}
