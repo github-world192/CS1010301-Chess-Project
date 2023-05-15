@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Chess</title>
+    <link rel=stylesheet type="text/css" href="./css/jquery-ui.min.css">
     <link rel=stylesheet type="text/css" href="./css/style.css">
     <link rel=stylesheet type="text/css" href="./css/startup.css">
     <link rel=stylesheet type="text/css" href="./css/cover.css">
     <link rel=stylesheet type="text/css" href="./css/menu.css">
     <link rel=stylesheet type="text/css" href="./css/game.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
+    <script src="./js/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -22,7 +24,7 @@
 
     <!-- Cover 面板 -->
     <div class="cover-board" id="cover-board" style="display: none;">
-        <div class="cover-cover" onclick="loadMenu()">
+        <div class="cover-cover" onclick="coverPress();">
             <!-- Cover Image -->
             <div class="cover-cover-image-container">
                 <img src="./image/cover-cover.png" alt="">
@@ -64,356 +66,12 @@
 
     <!-- Game 面版 -->
     <div class="game-board" id="game-board" style="display: none;">
-        <div class="grid-container">
-            <!-- 8 -->
-            <div class="grid-item">
-                <div class="piece-square light-square">
-                    <div class="chess"> 
-                        <img src="./image/chess/black-rook.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-knight.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-bishop.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-queen.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-king.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-bishop.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-knight.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-rook.PNG" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 7 -->
-            <div class="grid-item">
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="./image/chess/black-pawn.PNG" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 6 -->
-            <div class="grid-item">
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 5 -->
-            <div class="grid-item">
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 4 -->
-            <div class="grid-item">
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 3 -->
-            <div class="grid-item">
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 2 -->
-            <div class="grid-item">
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- 1 -->
-            <div class="grid-item">
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square dark-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-                <div class="piece-square light-square">
-                    <div class="chess">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
+        <div class="game-board-grid-container" id="game-board-container">
         </div>
 
         <div class="game-player1-name-container">Player1 Name</div>
         <div class="game-player2-name-container">Player2 Name</div>
-        <button class="back-menu-button" onclick="loadMenu()">
+        <button class="back-menu-button" onclick="menu();">
             Menu
         </button>
         <div class="game-player1-time-container">10:00</div>
@@ -421,6 +79,8 @@
 
     </div>
 
+    <script src="./js/api.js"></script>
+    <script src="./js/game.js"></script>
     <script src="./js/script.js"></script>
 </body>
 

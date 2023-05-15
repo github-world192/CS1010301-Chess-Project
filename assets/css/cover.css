@@ -43,10 +43,10 @@
     font-size: 24px;
     color: white;
     display: flex;
-    animation: fadeInOut 2s linear infinite;
+    animation: cover-fadeInOut 2s linear infinite;
 }
   
-@keyframes fadeInOut {
-0%,100% { opacity: 0; }
-50% { opacity: 1; }
+@keyframes cover-fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
 }

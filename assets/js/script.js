@@ -1,7 +1,26 @@
-let startupBoard = $("#startup-board");
-let coverBoard = $("#cover-board");
-let menuBoard = $("#menu-board");
-let gameBoard = $("#game-board");
+/**
+ * URL Proccess
+ */
+function getHashTag() {
+  return location.hash.substring(1);
+}
+
+function setHashTag(tag) {
+  const nextURL = "#" + tag;
+  const nextTitle = document.title;
+  const nextState = {};
+
+  // This will create a new entry in the browser's history, without reloading
+  window.history.pushState(nextState, nextTitle, nextURL);
+}
+
+/**
+ * Board View
+ */
+const startupBoard = $("#startup-board");
+const coverBoard = $("#cover-board");
+const menuBoard = $("#menu-board");
+const gameBoard = $("#game-board");
 
 function hideAllBoard() {
   startupBoard.hide();
@@ -10,33 +29,70 @@ function hideAllBoard() {
   gameBoard.hide();
 }
 
-function loadStartup() {
+function loadStartupView() {
   hideAllBoard();
   startupBoard
     .delay(1000)
     .fadeIn(1000)
     .delay(5000)
     .fadeOut(1000, function () {
-      loadCover();
+      moveToBoardView("cover");
     });
 }
 
-function loadCover() {
+function loadCoverView() {
   hideAllBoard();
   coverBoard.fadeIn(1000);
 }
 
-function loadMenu() {
+function loadMenuView() {
   hideAllBoard();
   menuBoard.show();
 }
 
-function start() {
-  console.log("開始遊戲");
-  startupBoard.hide();
-  coverBoard.hide();
-  menuBoard.hide();
+function loadGameView() {
+  hideAllBoard();
   gameBoard.show();
+  updateGame();
+}
+
+function updateBoardView() {
+  switch (getHashTag()) {
+    case "startup":
+      loadStartupView();
+      break;
+    case "cover":
+      loadCoverView();
+      break;
+    case "menu":
+      loadMenuView();
+      break;
+    case "game":
+      loadGameView();
+      break;
+    default:
+      moveToBoardView("startup");
+      break;
+  }
+}
+
+function moveToBoardView(tag) {
+  setHashTag(tag);
+  updateBoardView();
+}
+
+/**
+ * Cover Functions
+ */
+function coverPress() {
+  moveToBoardView("menu");
+}
+
+/**
+ * Menu Functions
+ */
+function start() {
+  moveToBoardView("game");
 }
 
 function online() {
@@ -52,10 +108,26 @@ function options() {
 }
 
 function exit() {
-  console.log("離開");
+  moveToBoardView("cover");
 }
 
+/**
+ * Menu Functions
+ */
+function menu() {
+  moveToBoardView("menu");
+}
+
+/**
+ * Window Event
+ */
+$(window).on("hashchange", function () {
+  updateBoardView();
+});
+
+/**
+ * Document Event
+ */
 $(document).ready(function () {
-  loadStartup();
-  //   loadCover();
+  updateBoardView();
 });
