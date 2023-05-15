@@ -2,14 +2,15 @@
  *  File: Movehandler.hpp
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:29:30
- *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 17:41:07
+ *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
+ *  Update Date: 2023/05/15 21:22:20
  *  Description: Move handler
  */
 
 #pragma once
 
 #include "Board.hpp"
+#include "Move.hpp"
 #include "Position.hpp"
 #include "piece/IPiece.hpp"
 #include "piece/Pawn.hpp"
