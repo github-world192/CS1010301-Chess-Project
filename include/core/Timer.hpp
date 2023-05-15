@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/15 00:41:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/15 01:37:22
+ *  Update Date: 2023/05/16 02:48:17
  *  Description: Timer Class
  */
 
@@ -11,6 +11,9 @@
 
 #include <chrono>
 #include <ctime>
+#include <iomanip>
+#include <sstream>
+#include <string>
 
 namespace Chess
 {
@@ -23,10 +26,14 @@ namespace Chess
         bool _pause{true};
 
     public:
-        Timer()
+        Timer() {}
+        Timer(time_t time) : _offset(time) {}
+
+    public:
+        inline void set(time_t time)
         {
-            auto now = std::chrono::system_clock::now();
-            this->_time = std::chrono::system_clock::to_time_t(now);
+            this->_time = Timer::_getNowTimeT();
+            this->_offset = time;
         }
 
         inline time_t get() const
@@ -37,7 +44,7 @@ namespace Chess
                 return (Timer::_getNowTimeT() - this->_time) + this->_offset;
         }
 
-        inline bool isPaused() const { return (this->_pause); }
+        inline bool isPaused() const { return this->_pause; }
 
         inline void start()
         {
@@ -63,6 +70,22 @@ namespace Chess
             this->_time = 0;
             this->_offset = 0;
             this->_pause = true;
+        }
+
+        inline std::string str() const
+        {
+            return Timer::toStr(this->get());
+        }
+
+        static inline std::string toStr(time_t time)
+        {
+            std::stringstream ss;
+            uint32_t minutes = time / 60;
+            uint32_t seconds = time % 60;
+            ss << std::setw(2) << std::setfill('0') << minutes
+               << ':'
+               << std::setw(2) << std::setfill('0') << seconds;
+            return ss.str();
         }
 
     private:
