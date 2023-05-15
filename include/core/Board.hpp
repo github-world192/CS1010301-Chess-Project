@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/14 02:02:51
+ *  Update Date: 2023/05/16 03:16:20
  *  Description: Board Class
  */
 
@@ -41,7 +41,7 @@ namespace Chess
         }
 
     public:
-        bool initialize();
+        void loadDefaultBoard();
         void clear();
 
         inline size_t width() const { return this->_width; }

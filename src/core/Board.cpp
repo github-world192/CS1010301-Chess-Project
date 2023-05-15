@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/13 18:18:02
+ *  Update Date: 2023/05/16 03:15:37
  *  Description: Board Class
  */
 
@@ -12,16 +12,17 @@
 
 using namespace Chess;
 
-bool Board::initialize()
+void Board::loadDefaultBoard()
 {
+    // Clear board first
+    this->clear();
+
     // Generate default board
     for ( size_t i = 0; i < this->_width; ++i )
         this->_board[1][i] = new Pawn(TPlayer::kBlack);
 
     for ( size_t i = 0; i < this->_width; ++i )
         this->_board[6][i] = new Pawn(TPlayer::kWhite);
-
-    return true;
 }
 
 void Board::clear()
