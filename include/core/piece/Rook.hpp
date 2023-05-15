@@ -1,10 +1,10 @@
 /**
- *  File: Knight.hpp
+ *  File: Rook.hpp
  *  Author: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Create Date: 2023/05/15 20:52:48
+ *  Create Date: 2023/05/10 22:57:30
  *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Update Date: 2023/05/16 03:25:47
- *  Description: Knight Piece
+ *  Update Date: 2023/05/16 03:26:09
+ *  Description: Piece Type definition
  */
 
 #pragma once
@@ -16,12 +16,12 @@
 namespace Chess
 {
 
-    class Knight : public IPiece
+    class Rook : public IPiece
     {
     public:
-        Knight(TPlayer owner)
+        Rook(TPlayer owner)
         {
-            this->_type = TPiece::kKnight;
+            this->_type = TPiece::kRook;
             this->_owner = owner;
         }
     };
