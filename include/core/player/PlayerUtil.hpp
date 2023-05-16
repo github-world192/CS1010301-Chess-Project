@@ -2,8 +2,8 @@
  *  File: PlayerUtil.hpp
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 02:55:43
- *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 02:58:00
+ *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
+ *  Update Date: 2023/05/16 17:26:21
  *  Description: Player Utility
  */
 
@@ -23,13 +23,12 @@ namespace Chess
         {
             switch ( type )
             {
-            case TPlayer::kUndefined:
-                return "undefined";
             case TPlayer::kWhite:
                 return "white";
             case TPlayer::kBlack:
                 return "black";
             }
+            return "undefined";
         }
     };
 
