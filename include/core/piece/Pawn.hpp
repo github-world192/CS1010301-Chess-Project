@@ -2,15 +2,16 @@
  *  File: Pawn.hpp
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/10 00:35:48
- *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/11 17:04:21
+ *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
+ *  Update Date: 2023/05/16 00:17:45
  *  Description: Pawn Piece Class
  */
 
 #pragma once
 
-#include "../Move.hpp"
+#include "../player/TPlayer.hpp"
 #include "IPiece.hpp"
+#include "TPiece.hpp"
 
 namespace Chess
 {
