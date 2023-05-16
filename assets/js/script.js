@@ -95,6 +95,11 @@ function start() {
   moveToBoardView("game");
 }
 
+function custom() 
+{
+  console.log("自訂");
+}
+
 function online() {
   console.log("線上模式");
 }
