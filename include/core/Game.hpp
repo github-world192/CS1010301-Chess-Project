@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Update Date: 2023/05/16 23:05:38
+ *  Update Date: 2023/05/16 23:31:25
  *  Description: Game Class
  */
 
@@ -12,6 +12,7 @@
 #include "Board.hpp"
 #include "Move.hpp"
 #include "TGameState.hpp"
+#include "Timer.hpp"
 #include "player/Player.hpp"
 
 #include <iostream>
@@ -27,6 +28,8 @@ namespace Chess
         std::vector<Player> _players;
         TPlayer _currentPlayerType;
         TGameState _state;
+        Timer _timerBlack;
+        Timer _timerWhite;
 
     public:
         Game();
@@ -40,6 +43,8 @@ namespace Chess
             this->_currentPlayerType = TPlayer::kWhite;
             this->_state = TGameState::kActive;
             this->_board.loadDefaultBoard();
+            this->_timerBlack.reset();
+            this->_timerWhite.reset();
         }
 
         inline void initialize(TPlayer first)
@@ -50,6 +55,8 @@ namespace Chess
             this->_currentPlayerType = first;
             this->_state = TGameState::kActive;
             this->_board.loadDefaultBoard();
+            this->_timerBlack.reset();
+            this->_timerWhite.reset();
         }
 
         inline bool isPlayerExists(TPlayer type) const
