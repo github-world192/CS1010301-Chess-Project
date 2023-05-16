@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 22:06:41
+ *  Update Date: 2023/05/17 02:02:50
  *  Description: Move Handler
  */
 
@@ -33,6 +33,66 @@ bool MoveHandler::isMoveValid(Board &board, const Move &move)
     }
 
     return false;
+}
+
+std::vector<Position>
+MoveHandler::getMovablePositions(Board &board, const Position &pos)
+{
+    std::vector<Position> movablePos;
+    IPiece *piece = board(pos);
+    switch ( piece->type() )
+    {
+
+    case TPiece::kBishop:
+    {
+        Bishop *bishop = (Bishop *)piece;
+        Bishop &bishopRef = *bishop;
+        movablePos = MoveHandler::_getBishopMovablePos(board, bishopRef, pos);
+    }
+    break;
+
+    case TPiece::kKing:
+    {
+        King *king = (King *)piece;
+        King &kingRef = *king;
+        movablePos = MoveHandler::_getKingMovablePos(board, kingRef, pos);
+    }
+    break;
+
+    case TPiece::kKnight:
+    {
+        Knight *knight = (Knight *)piece;
+        Knight &knightRef = *knight;
+        movablePos = MoveHandler::_getKnightMovablePos(board, knightRef, pos);
+    }
+    break;
+
+    case TPiece::kPawn:
+    {
+        Pawn *pawn = (Pawn *)piece;
+        Pawn &pawnRef = *pawn;
+        movablePos = MoveHandler::_getPawnMovablePos(board, pawnRef, pos);
+    }
+    break;
+
+    case TPiece::kQueen:
+    {
+        Queen *queen = (Queen *)piece;
+        Queen &queenRef = *queen;
+        movablePos = MoveHandler::_getQueenMovablePos(board, queenRef, pos);
+    }
+    break;
+
+    case TPiece::kRook:
+    {
+        Rook *rook = (Rook *)piece;
+        Rook &rookRef = *rook;
+        movablePos = MoveHandler::_getRookMovablePos(board, rookRef, pos);
+    }
+    break;
+    }
+
+    return movablePos;
 }
 
 std::vector<Position>
@@ -66,9 +126,7 @@ MoveHandler::getKillablePositions(Board &board, const Position &pos)
     {
         Knight *knight = (Knight *)piece;
         Knight &knightRef = *knight;
-        killableRelativePos =
-            MoveHandler::_getKnightKillableRelativePos(board, knightRef);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
+        killablePos = MoveHandler::_getKnightKillablePos(board, knightRef, pos);
     }
     break;
 
@@ -76,9 +134,7 @@ MoveHandler::getKillablePositions(Board &board, const Position &pos)
     {
         Pawn *pawn = (Pawn *)piece;
         Pawn &pawnRef = *pawn;
-        killableRelativePos =
-            MoveHandler::_getPawnKillableRelativePos(board, pawnRef);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
+        killablePos = MoveHandler::_getPawnKillablePos(board, pawnRef, pos);
     }
     break;
 
@@ -94,14 +150,9 @@ MoveHandler::getKillablePositions(Board &board, const Position &pos)
     {
         Rook *rook = (Rook *)piece;
         Rook &rookRef = *rook;
-        killableRelativePos =
-            MoveHandler::_getRookKillableRelativePos(board, rookRef);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
+        killablePos = MoveHandler::_getRookKillablePos(board, rookRef, pos);
     }
     break;
-
-    default:
-        break;
     }
 
     // for ( const Position &p : killablePos )
@@ -118,104 +169,27 @@ MoveHandler::getKillablePositions(Board &board, const Position &pos)
     return realKillablePos;
 }
 
-std::vector<Position>
-MoveHandler::getMovablePositions(Board &board, const Position &pos)
+std::vector<Position> MoveHandler::getMovableKillablePositions(
+    Board &board, const Position &pos)
 {
-    std::vector<Position> movableRelativePos;
-    std::vector<Position> movablePos;
-    std::vector<Position> killableRelativePos;
-    std::vector<Position> killablePos;
-    IPiece *piece = board(pos);
-    switch ( piece->type() )
-    {
+    std::vector<Position> positions;
+    std::vector<Position> movablePositions =
+        MoveHandler::getMovablePositions(board, pos);
+    std::vector<Position> killablePositions =
+        MoveHandler::getKillablePositions(board, pos);
 
-    case TPiece::kBishop:
-    {
-        Bishop *bishop = (Bishop *)piece;
-        Bishop &bishopRef = *bishop;
-        movablePos =
-            MoveHandler::_getBishopMovablePos(board, bishopRef, pos);
-        killablePos =
-            MoveHandler::_getBishopKillablePos(board, bishopRef, pos);
-    }
-    break;
+    // Get movable positions
+    positions.insert(positions.end(),
+                     movablePositions.begin(), movablePositions.end());
 
-    case TPiece::kKing:
-    {
-        King *king = (King *)piece;
-        King &kingRef = *king;
-        movablePos =
-            MoveHandler::_getKingMovablePos(board, kingRef, pos);
-        killablePos =
-            MoveHandler::_getKingKillablePos(board, kingRef, pos);
-    }
-    break;
+    // Get killable positions
+    positions.insert(positions.end(), killablePositions.begin(),
+                     killablePositions.end());
 
-    case TPiece::kKnight:
-    {
-        Knight *knight = (Knight *)piece;
-        Knight &knightRef = *knight;
-        movableRelativePos =
-            MoveHandler::_getKnightMovableRelativePos(board, knightRef);
-        killableRelativePos =
-            MoveHandler::_getKnightKillableRelativePos(board, knightRef);
-        movablePos = MoveHandler::_toRealPos(board, pos, movableRelativePos);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
-    }
-    break;
+    // Remove repeat
+    positions = MoveHandler::_removeRepeatPos(positions);
 
-    case TPiece::kPawn:
-    {
-        Pawn *pawn = (Pawn *)piece;
-        Pawn &pawnRef = *pawn;
-        movableRelativePos =
-            MoveHandler::_getPawnMovableRelativePos(board, pawnRef);
-        killableRelativePos =
-            MoveHandler::_getPawnKillableRelativePos(board, pawnRef);
-        movablePos = MoveHandler::_toRealPos(board, pos, movableRelativePos);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
-    }
-    break;
-
-    case TPiece::kQueen:
-    {
-        Queen *queen = (Queen *)piece;
-        Queen &queenRef = *queen;
-        movablePos =
-            MoveHandler::_getQueenMovablePos(board, queenRef, pos);
-        killablePos =
-            MoveHandler::_getQueenKillablePos(board, queenRef, pos);
-    }
-    break;
-
-    case TPiece::kRook:
-    {
-        Rook *rook = (Rook *)piece;
-        Rook &rookRef = *rook;
-        movableRelativePos =
-            MoveHandler::_getRookMovableRelativePos(board, rookRef);
-        killableRelativePos =
-            MoveHandler::_getRookKillableRelativePos(board, rookRef);
-        movablePos = MoveHandler::_toRealPos(board, pos, movableRelativePos);
-        killablePos = MoveHandler::_toRealPos(board, pos, killableRelativePos);
-    }
-    break;
-
-    default:
-        break;
-    }
-
-    for ( const Position &p : killablePos )
-    {
-        if ( board(p) == nullptr )
-            continue;
-
-        // Check if the pos piece killable, push into movablePos
-        if ( board(p)->getOwner() != piece->getOwner() )
-            movablePos.push_back(p);
-    }
-
-    return movablePos;
+    return positions;
 }
 
 Position MoveHandler::_toRealPos(const Position &origin,
@@ -224,18 +198,25 @@ Position MoveHandler::_toRealPos(const Position &origin,
     return (origin + relative);
 }
 
-std::vector<Position> MoveHandler::_toRealPos(
-    Board &board, const Position &pos,
+std::vector<Position> MoveHandler::_removeRepeatPos(
     const std::vector<Position> &poss)
 {
     std::vector<Position> r;
     for ( const Position &p : poss )
     {
-        Position realPos = (Position)pos + p;
-        // Save only the real pos valid
-        if ( board.isPositionValid(realPos) )
-            r.push_back(realPos);
+        bool repeat = false;
+        for ( const Position &rp : r )
+        {
+            if ( rp == p )
+            {
+                repeat = true;
+                break;
+            }
+        }
+        if ( !repeat )
+            r.push_back(p);
     }
+
     return r;
 }
 
@@ -304,7 +285,6 @@ bool MoveHandler::_isKingPosKillable(Board &board, const Position &pos,
     return false;
 }
 
-// TODO: Fix movable pos will let king death
 std::vector<Position> MoveHandler::_getKingMovablePos(
     Board &board, const King &king, const Position &pos)
 {
@@ -314,7 +294,24 @@ std::vector<Position> MoveHandler::_getKingMovablePos(
     std::vector<Position> possibleMove = {
         {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
-    movablePos = MoveHandler::_toRealPos(board, pos, possibleMove);
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, break
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position
+        if ( board.isPositionPiece(realP) )
+        {
+            if ( board(realP)->getOwner() != king.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+            movablePos.push_back(realP);
+    }
 
     // If king moved, no need to do castling check
     if ( king.getMoved() )
@@ -367,66 +364,136 @@ std::vector<Position> MoveHandler::_getKingMovablePos(
     return movablePos;
 }
 
-// TODO: Fix movable pos will let king death
 std::vector<Position> MoveHandler::_getKingKillablePos(
     Board &board, const King &king, const Position &pos)
 {
-    // Define 8 possible move
-    std::vector<Position> movablePos = {
-        {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-    return MoveHandler::_toRealPos(board, pos, movablePos);
-}
-
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getKnightMovableRelativePos(
-    Board &board, const Knight &knight)
-{
     std::vector<Position> movablePos;
-    movablePos.push_back({-1, 2});
-    movablePos.push_back({-2, 1});
-    movablePos.push_back({-2, -1});
-    movablePos.push_back({-1, -2});
-    movablePos.push_back({1, -2});
-    movablePos.push_back({2, -1});
-    movablePos.push_back({2, 1});
-    movablePos.push_back({1, 2});
+
+    // Define 8 possible move
+    std::vector<Position> possibleMove = {
+        {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, break
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position
+        if ( board.isPositionPiece(realP) )
+        {
+            if ( board(realP)->getOwner() != king.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+            movablePos.push_back(realP);
+    }
 
     return movablePos;
 }
 
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getKnightKillableRelativePos(
-    Board &board, const Knight &knight)
+std::vector<Position> MoveHandler::_getKnightMovablePos(
+    Board &board, const Knight &knight, const Position &pos)
 {
-    return MoveHandler::_getKnightMovableRelativePos(board, knight);
+    std::vector<Position> movablePos;
+
+    // Define 8 possible move
+    std::vector<Position> possibleMove = {
+        {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
+
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, break
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position
+        if ( board.isPositionPiece(realP) )
+        {
+            if ( board(realP)->getOwner() != knight.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+            movablePos.push_back(realP);
+    }
+
+    return movablePos;
 }
 
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getPawnMovableRelativePos(
-    Board &board, const Pawn &pawn)
+std::vector<Position> MoveHandler::_getKnightKillablePos(
+    Board &board, const Knight &knight, const Position &pos)
 {
-    int8_t dir = pawn.isBlack() ? 1 : -1;
-    std::vector<Position> moveablePos;
-    moveablePos.push_back({0, 1 * dir});
-    // Pawn can move forward 2 steps, if wasn't moved
-    if ( !(pawn.getMoved()) )
-        moveablePos.push_back({0, 2 * dir});
-
-    return moveablePos;
+    return MoveHandler::_getKnightMovablePos(board, knight, pos);
 }
 
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getPawnKillableRelativePos(
-    Board &board, const Pawn &pawn)
+std::vector<Position> MoveHandler::_getPawnMovablePos(
+    Board &board, const Pawn &pawn, const Position &pos)
 {
     int8_t dir = pawn.isBlack() ? 1 : -1;
-    // Killable position list
-    std::vector<Position> killablePos = {
-        Position(1, dir),
-        Position(-1, dir),
-    };
 
-    return killablePos;
+    std::vector<Position> movablePos;
+
+    // Define 1 possible move
+    std::vector<Position> possibleMove = {{0, 1 * dir}};
+
+    // If the piece not moved, it can move 2 steps
+    if ( !pawn.getMoved() )
+        possibleMove.push_back({0, 2 * dir});
+
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, contiune
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position, contiune
+        if ( board.isPositionPiece(realP) )
+            continue;
+
+        movablePos.push_back(realP);
+    }
+
+    return movablePos;
+}
+
+std::vector<Position> MoveHandler::_getPawnKillablePos(
+    Board &board, const Pawn &pawn, const Position &pos)
+{
+    int8_t dir = pawn.isBlack() ? 1 : -1;
+
+    std::vector<Position> movablePos;
+
+    // Define 2 possible move
+    std::vector<Position> possibleMove = {{-1, dir}, {1, dir}};
+
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, break
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position
+        if ( board.isPositionPiece(realP) )
+        {
+            if ( board(realP)->getOwner() != pawn.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+            movablePos.push_back(realP);
+    }
+
+    return movablePos;
 }
 
 std::vector<Position> MoveHandler::_getQueenMovablePos(
@@ -472,24 +539,44 @@ std::vector<Position> MoveHandler::_getQueenKillablePos(
     return MoveHandler::_getQueenMovablePos(board, queen, pos);
 }
 
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getRookMovableRelativePos(
-    Board &board, const Rook &rook)
+std::vector<Position> MoveHandler::_getRookMovablePos(
+    Board &board, const Rook &rook, const Position &pos)
 {
-    std::vector<Position> moveablePos;
-    for ( int i = 1; i < 8; i++ )
+    std::vector<Position> movablePos;
+
+    // Define 4 move directions
+    std::vector<Position> movableDir = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+
+    for ( const Position &cd : movableDir )
     {
-        moveablePos.push_back({0, i});
-        moveablePos.push_back({0, -i});
-        moveablePos.push_back({i, 0});
-        moveablePos.push_back({-i, 0});
+        for ( size_t i = 1; i < board.width(); ++i )
+        {
+            // Calculate position
+            Position cp = cd * i;
+            Position realCp = MoveHandler::_toRealPos(pos, cp);
+
+            // If position invalid, break
+            if ( !(board.isPositionValid(realCp)) )
+                break;
+
+            // If there a piece at position
+            if ( board.isPositionPiece(realCp) )
+            {
+                if ( board(realCp)->getOwner() != rook.getOwner() )
+                    // Append to movablePos
+                    movablePos.push_back(realCp);
+                break;
+            }
+            else
+                movablePos.push_back(realCp);
+        }
     }
-    return moveablePos;
+
+    return movablePos;
 }
 
-// TODO: Fix movable pos shoule not on player's piece position
-std::vector<Position> MoveHandler::_getRookKillableRelativePos(
-    Board &board, const Rook &rook)
+std::vector<Position> MoveHandler::_getRookKillablePos(
+    Board &board, const Rook &rook, const Position &pos)
 {
-    return MoveHandler::_getRookMovableRelativePos(board, rook);
+    return MoveHandler::_getRookMovablePos(board, rook, pos);
 }

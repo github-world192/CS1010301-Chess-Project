@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:29:30
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 21:44:45
+ *  Update Date: 2023/05/17 02:02:58
  *  Description: Move handler
  */
 
@@ -36,12 +36,14 @@ namespace Chess
         static std::vector<Position> getKillablePositions(
             Board &board, const Position &pos);
 
+        static std::vector<Position> getMovableKillablePositions(
+            Board &board, const Position &pos);
+
     private:
         static Position _toRealPos(const Position &origin,
                                    const Position &relative);
 
-        static std::vector<Position> _toRealPos(
-            Board &board, const Position &pos,
+        static std::vector<Position> _removeRepeatPos(
             const std::vector<Position> &poss);
 
         static std::vector<Position> _getBishopMovablePos(
@@ -59,17 +61,17 @@ namespace Chess
         static std::vector<Position> _getKingKillablePos(
             Board &board, const King &piece, const Position &pos);
 
-        static std::vector<Position> _getKnightMovableRelativePos(
-            Board &board, const Knight &piece);
+        static std::vector<Position> _getKnightMovablePos(
+            Board &board, const Knight &piece, const Position &pos);
 
-        static std::vector<Position> _getKnightKillableRelativePos(
-            Board &board, const Knight &piece);
+        static std::vector<Position> _getKnightKillablePos(
+            Board &board, const Knight &piece, const Position &pos);
 
-        static std::vector<Position> _getPawnMovableRelativePos(
-            Board &board, const Pawn &piece);
+        static std::vector<Position> _getPawnMovablePos(
+            Board &board, const Pawn &piece, const Position &pos);
 
-        static std::vector<Position> _getPawnKillableRelativePos(
-            Board &board, const Pawn &piece);
+        static std::vector<Position> _getPawnKillablePos(
+            Board &board, const Pawn &piece, const Position &pos);
 
         static std::vector<Position> _getQueenMovablePos(
             Board &board, const Queen &piece, const Position &pos);
@@ -77,11 +79,11 @@ namespace Chess
         static std::vector<Position> _getQueenKillablePos(
             Board &board, const Queen &piece, const Position &pos);
 
-        static std::vector<Position> _getRookMovableRelativePos(
-            Board &board, const Rook &piece);
+        static std::vector<Position> _getRookMovablePos(
+            Board &board, const Rook &piece, const Position &pos);
 
-        static std::vector<Position> _getRookKillableRelativePos(
-            Board &board, const Rook &piece);
+        static std::vector<Position> _getRookKillablePos(
+            Board &board, const Rook &piece, const Position &pos);
     };
 
 }
