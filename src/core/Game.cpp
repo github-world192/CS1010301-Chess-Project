@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 03:11:58
+ *  Update Date: 2023/05/17 05:35:10
  *  Description: Chess Class
  */
 
@@ -26,6 +26,9 @@ std::vector<Position> Game::getBoardPieceMovablePos(const Position &pos) const
 
 bool Game::makeMove(const Move &move)
 {
+    if ( this->_state != TGameState::kActive )
+        return false;
+
     if ( move.getPlayerType() != this->_currentPlayerType )
         return false;
 
@@ -35,10 +38,96 @@ bool Game::makeMove(const Move &move)
     if ( this->_board.move(move.getFrom(), move.getTo()) )
     {
         this->swapCurrentPlayerType();
+        updateGame();
         return true;
     }
 
     return false;
+}
+
+bool Game::isCheckmate() const
+{
+    TPlayer enemy = (this->_currentPlayerType == TPlayer::kBlack)
+                        ? TPlayer::kWhite
+                        : TPlayer::kBlack;
+
+    std::vector<Position> kingPos =
+        this->_board.findPiecesPos(this->_currentPlayerType, TPiece::kKing);
+
+    // If king not exists, is checkmate
+    if ( kingPos.size() < 1 )
+        return true;
+
+    // Get all pieces movable positions without king
+    std::vector<Position> piecesPosWithoutKing =
+        this->_board.findPiecesPosExcept(this->_currentPlayerType, TPiece::kKing);
+
+    // Get king movable/killable positions
+    std::vector<Position> kingMovablePos =
+        MoveHandler::getMovableKillablePositions(this->_board, kingPos[0]);
+
+    // If there still have a way to move
+    if ( kingMovablePos.size() > 0 )
+        return false;
+
+    // Get all movable/killable position without king
+    std::vector<Position> movablePosWithoutKing;
+    for ( const Position &mp : piecesPosWithoutKing )
+    {
+        std::vector<Position> movablePos =
+            MoveHandler::getMovableKillablePositions(this->_board, mp);
+        movablePosWithoutKing.insert(movablePosWithoutKing.end(),
+                                     movablePos.begin(), movablePos.end());
+    }
+
+    // If there still have a way to move, not checkmate
+    if ( movablePosWithoutKing.size() != 0 )
+        return false;
+
+    return true;
+}
+
+void Game::updateGameState()
+{
+    if ( this->getPlayerTime(TPlayer::kBlack) <= 0 )
+    {
+        this->_state = TGameState::kWhiteWin;
+        return;
+    }
+
+    if ( this->getPlayerTime(TPlayer::kWhite) <= 0 )
+    {
+        this->_state = TGameState::kBlackWin;
+        return;
+    }
+
+    if ( this->isCheckmate() )
+    {
+        this->_state = (this->_currentPlayerType == TPlayer::kBlack)
+                           ? TGameState::kWhiteWin
+                           : TGameState::kBlackWin;
+    }
+}
+
+void Game::updateTimer()
+{
+    if ( this->_state != TGameState::kActive )
+    {
+        this->_timerBlack.pause();
+        this->_timerWhite.pause();
+        return;
+    }
+
+    if ( this->_currentPlayerType == TPlayer::kBlack )
+    {
+        this->_timerBlack.start();
+        this->_timerWhite.pause();
+    }
+    else
+    {
+        this->_timerBlack.pause();
+        this->_timerWhite.start();
+    }
 }
 
 void Game::printBoard() const

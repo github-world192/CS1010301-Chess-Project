@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 22:09:13
+ *  Update Date: 2023/05/17 04:58:20
  *  Description: Board Class
  */
 
@@ -199,6 +199,26 @@ std::vector<Position> Board::findPiecesPos(TPlayer owner, TPiece type) const
 
             if ( (*this)(pos)->getOwner() == owner &&
                  (*this)(pos)->type() == type )
+                r.push_back(pos);
+        }
+    }
+    return r;
+}
+
+std::vector<Position> Board::findPiecesPosExcept(
+    TPlayer owner, TPiece exceptType) const
+{
+    std::vector<Position> r;
+    Position pos;
+    for ( pos.y = 0; pos.y < this->_board.size(); ++pos.y )
+    {
+        for ( pos.x = 0; pos.x < this->_board[pos.y].size(); ++pos.x )
+        {
+            if ( !(this->isPositionPiece(pos)) )
+                continue;
+
+            if ( (*this)(pos)->getOwner() == owner &&
+                 (*this)(pos)->type() != exceptType )
                 r.push_back(pos);
         }
     }
