@@ -2,8 +2,8 @@
  *  File: Game.hpp
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
- *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 03:15:57
+ *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
+ *  Update Date: 2023/05/16 22:55:02
  *  Description: Game Class
  */
 
@@ -11,6 +11,7 @@
 
 #include "Board.hpp"
 #include "Move.hpp"
+#include "TGameState.hpp"
 #include "player/Player.hpp"
 
 #include <iostream>
@@ -25,6 +26,7 @@ namespace Chess
         Board _board;
         std::vector<Player> _players;
         TPlayer _currentPlayerType;
+        TGameState _state;
 
     public:
         Game();
@@ -36,6 +38,7 @@ namespace Chess
             this->_players.push_back(Player(TPlayer::kWhite));
             this->_players.push_back(Player(TPlayer::kBlack));
             this->_currentPlayerType = TPlayer::kWhite;
+            this->_state = TGameState::kActive;
             this->_board.loadDefaultBoard();
         }
 
@@ -79,6 +82,15 @@ namespace Chess
         }
 
         inline const Board &getBoard() const { return this->_board; }
+
+        inline TGameState getGameState() const { return this->_state; }
+
+        inline void resign()
+        {
+            (this->_currentPlayerType == TPlayer::kBlack)
+                ? this->_state = TGameState::kWhiteWin
+                : this->_state = TGameState::kBlackWin;
+        }
 
         std::vector<Position> getBoardPieceMovablePos(const Position &pos) const;
 
