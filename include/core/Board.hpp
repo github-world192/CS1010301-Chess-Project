@@ -3,15 +3,20 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 03:16:20
+ *  Update Date: 2023/05/16 16:39:09
  *  Description: Board Class
  */
 
 #pragma once
 
 #include "Position.hpp"
+#include "piece/Bishop.hpp"
 #include "piece/IPiece.hpp"
+#include "piece/King.hpp"
+#include "piece/Knight.hpp"
 #include "piece/Pawn.hpp"
+#include "piece/Queen.hpp"
+#include "piece/Rook.hpp"
 
 #include <iostream>
 #include <stdexcept>
@@ -37,8 +42,10 @@ namespace Chess
 
         ~Board()
         {
-            // this->_free();
+            this->_free();
         }
+
+        Board(const Board &board);
 
     public:
         void loadDefaultBoard();
@@ -59,6 +66,8 @@ namespace Chess
         }
 
         bool move(const Position &from, const Position &to);
+
+        std::vector<const IPiece *> getPiecesByOwner(TPlayer player) const;
 
         inline std::string toString() const
         {
