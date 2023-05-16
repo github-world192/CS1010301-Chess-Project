@@ -1,7 +1,7 @@
 /* Game 版面 */
 :root {
     --game-board-piece-spot-light-background: #ffffff;
-    --game-board-piece-spot-dark-background: #D9D9D9;
+    --game-board-piece-spot-dark-background: #C8BFC7;
 }
 
 .game-board {
@@ -66,11 +66,11 @@
     background: var(--game-board-piece-spot-dark-background);
 }
 
-.game-player1-name-container {
+.game-player1-label-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 25%;
+    left: 20%;
     top: 10%;
     font-family: 'Inter';
     font-style: normal;
@@ -79,11 +79,24 @@
     color: #FFFFFF;
 }
 
-.game-player1-time-container {
+.game-player1-name-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 65%;
+    left: 20%;
+    top: 14%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player2-label-container {
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    left: 74%;
     top: 10%;
     font-family: 'Inter';
     font-style: normal;
@@ -94,10 +107,10 @@
 
 .game-player2-name-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 65%;
-    top: 85%;
+    left: 74%;
+    top: 14%;
     font-family: 'Inter';
     font-style: normal;
     font-size: 24px;
@@ -105,17 +118,49 @@
     color: #FFFFFF;
 }
 
-.game-player2-time-container {
+.game-time-label-container {
     position: absolute;
     width: 10%;
     height: 5%;
-    left: 25%;
-    top: 85%;
     font-family: 'Inter';
     font-style: normal;
     font-size: 24px;
     text-align: center;
     color: #FFFFFF;
+}
+
+.game-time-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    left:4%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+
+.game-player1-chess-role
+{
+    position: absolute;
+    width: 637px;
+    height: 807px;
+    left: 5%;
+    top: 10%;
+    background: url(../image/chess-role/player1-pawn.png);
+}
+
+.game-player2-chess-role
+{
+    position: absolute;
+    width: 637px;
+    height: 807px;
+    left: 60%;
+    top: 10%;
+    background: url(../image/chess-role/player2-pawn.png);
+
 }
 
 .back-menu-button {
