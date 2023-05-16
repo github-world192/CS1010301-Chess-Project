@@ -3,7 +3,6 @@
 #include "Inspector.hpp"
 #include "core/Game.hpp"
 #include "lib/json.hpp"
-
 #include <AppCore/AppCore.h>
 #include <JavaScriptCore/JavaScript.h>
 
@@ -76,6 +75,16 @@ private:
                                        JSObjectRef thisObject, size_t argumentCount,
                                        const JSValueRef arguments[],
                                        JSValueRef *exception);
+
+    static JSValueRef GetGameState(JSContextRef ctx, JSObjectRef function,
+                                   JSObjectRef thisObject, size_t argumentCount,
+                                   const JSValueRef arguments[],
+                                   JSValueRef *exception);
+
+    static JSValueRef GetPlayerClock(JSContextRef ctx, JSObjectRef function,
+                                     JSObjectRef thisObject, size_t argumentCount,
+                                     const JSValueRef arguments[],
+                                     JSValueRef *exception);
 
     static JSValueRef GetBoard(JSContextRef ctx, JSObjectRef function,
                                JSObjectRef thisObject, size_t argumentCount,

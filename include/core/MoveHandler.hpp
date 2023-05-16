@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:29:30
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 02:02:58
+ *  Update Date: 2023/05/17 04:56:04
  *  Description: Move handler
  */
 
@@ -28,16 +28,16 @@ namespace Chess
     class MoveHandler
     {
     public:
-        static bool isMoveValid(Board &board, const Move &move);
+        static bool isMoveValid(const Board &board, const Move &move);
 
         static std::vector<Position> getMovablePositions(
-            Board &board, const Position &pos);
+            const Board &board, const Position &pos);
 
         static std::vector<Position> getKillablePositions(
-            Board &board, const Position &pos);
+            const Board &board, const Position &pos);
 
         static std::vector<Position> getMovableKillablePositions(
-            Board &board, const Position &pos);
+            const Board &board, const Position &pos);
 
     private:
         static Position _toRealPos(const Position &origin,
@@ -47,43 +47,43 @@ namespace Chess
             const std::vector<Position> &poss);
 
         static std::vector<Position> _getBishopMovablePos(
-            Board &board, const Bishop &piece, const Position &pos);
+            const Board &board, const Bishop &piece, const Position &pos);
 
         static std::vector<Position> _getBishopKillablePos(
-            Board &board, const Bishop &piece, const Position &pos);
+            const Board &board, const Bishop &piece, const Position &pos);
 
-        static bool _isKingPosKillable(Board &board, const Position &pos,
+        static bool _isKingPosKillable(const Board &board, const Position &pos,
                                        TPlayer player);
 
         static std::vector<Position> _getKingMovablePos(
-            Board &board, const King &piece, const Position &pos);
+            const Board &board, const King &piece, const Position &pos);
 
         static std::vector<Position> _getKingKillablePos(
-            Board &board, const King &piece, const Position &pos);
+            const Board &board, const King &piece, const Position &pos);
 
         static std::vector<Position> _getKnightMovablePos(
-            Board &board, const Knight &piece, const Position &pos);
+            const Board &board, const Knight &piece, const Position &pos);
 
         static std::vector<Position> _getKnightKillablePos(
-            Board &board, const Knight &piece, const Position &pos);
+            const Board &board, const Knight &piece, const Position &pos);
 
         static std::vector<Position> _getPawnMovablePos(
-            Board &board, const Pawn &piece, const Position &pos);
+            const Board &board, const Pawn &piece, const Position &pos);
 
         static std::vector<Position> _getPawnKillablePos(
-            Board &board, const Pawn &piece, const Position &pos);
+            const Board &board, const Pawn &piece, const Position &pos);
 
         static std::vector<Position> _getQueenMovablePos(
-            Board &board, const Queen &piece, const Position &pos);
+            const Board &board, const Queen &piece, const Position &pos);
 
         static std::vector<Position> _getQueenKillablePos(
-            Board &board, const Queen &piece, const Position &pos);
+            const Board &board, const Queen &piece, const Position &pos);
 
         static std::vector<Position> _getRookMovablePos(
-            Board &board, const Rook &piece, const Position &pos);
+            const Board &board, const Rook &piece, const Position &pos);
 
         static std::vector<Position> _getRookKillablePos(
-            Board &board, const Rook &piece, const Position &pos);
+            const Board &board, const Rook &piece, const Position &pos);
     };
 
 }

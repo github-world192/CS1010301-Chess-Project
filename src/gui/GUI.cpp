@@ -3,11 +3,12 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/14 08:05:10
+ *  Update Date: 2023/05/17 05:20:34
  *  Description: GUI
  */
 
 #include "gui/GUI.hpp"
+#include "core/GameStateUtil.hpp"
 #include "core/player/PlayerUtil.hpp"
 
 #include <iostream>
@@ -171,6 +172,36 @@ void GUI::OnDOMReady(ultralight::View *caller,
     JSStringRelease(name_GetCurrentPlayer);
 
     /**
+     * GetGameState
+     */
+    JSStringRef name_GetGameState =
+        JSStringCreateWithUTF8CString("apiGetGameState");
+
+    JSObjectRef func_GetGameState =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetGameState,
+                                         GUI::GetGameState);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetGameState,
+                        func_GetGameState, 0, 0);
+
+    JSStringRelease(name_GetGameState);
+
+    /**
+     * GetPlayerClock
+     */
+    JSStringRef name_GetPlayerClock =
+        JSStringCreateWithUTF8CString("apiGetPlayerClock");
+
+    JSObjectRef func_GetPlayerClock =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetPlayerClock,
+                                         GUI::GetPlayerClock);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetPlayerClock,
+                        func_GetPlayerClock, 0, 0);
+
+    JSStringRelease(name_GetPlayerClock);
+
+    /**
      * Test
      */
     JSStringRef name_Test = JSStringCreateWithUTF8CString("apiTest");
@@ -265,6 +296,48 @@ JSValueRef GUI::Test(JSContextRef ctx, JSObjectRef function,
     data["width"] = 5432;
     data["height"] = 9487;
     return GUI::JsonToJSValue(ctx, data);
+}
+
+JSValueRef GUI::GetGameState(JSContextRef ctx, JSObjectRef function,
+                             JSObjectRef thisObject, size_t argumentCount,
+                             const JSValueRef arguments[],
+                             JSValueRef *exception)
+{
+    std::string state = GameStateUtil::typeToStr(game.getGameState());
+
+    JSStringRef r_str = JSStringCreateWithUTF8CString(state.c_str());
+    JSValueRef r = JSValueMakeString(ctx, r_str);
+    JSStringRelease(r_str);
+
+    return r;
+}
+
+JSValueRef GUI::GetPlayerClock(JSContextRef ctx, JSObjectRef function,
+                               JSObjectRef thisObject, size_t argumentCount,
+                               const JSValueRef arguments[],
+                               JSValueRef *exception)
+{
+    // playerID
+    if ( argumentCount < 1 ||
+         !JSValueIsNumber(ctx, arguments[0]) )
+        return JSValueMakeUndefined(ctx);
+
+    int playerID = JSValueToNumber(ctx, arguments[0], exception);
+
+    if ( playerID != 0 && playerID != 1 )
+        return JSValueMakeUndefined(ctx);
+
+    TPlayer player = (playerID == 1)
+                         ? TPlayer::kBlack
+                         : TPlayer::kWhite;
+
+    std::string clock = game.getPlayerTimeStr(player);
+
+    JSStringRef r_str = JSStringCreateWithUTF8CString(clock.c_str());
+    JSValueRef r = JSValueMakeString(ctx, r_str);
+    JSStringRelease(r_str);
+
+    return r;
 }
 
 JSValueRef GUI::GetCurrentPlayer(JSContextRef ctx, JSObjectRef function,
