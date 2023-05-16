@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Update Date: 2023/05/16 22:55:02
+ *  Update Date: 2023/05/16 23:05:38
  *  Description: Game Class
  */
 
@@ -38,6 +38,16 @@ namespace Chess
             this->_players.push_back(Player(TPlayer::kWhite));
             this->_players.push_back(Player(TPlayer::kBlack));
             this->_currentPlayerType = TPlayer::kWhite;
+            this->_state = TGameState::kActive;
+            this->_board.loadDefaultBoard();
+        }
+
+        inline void initialize(TPlayer first)
+        {
+            this->_players.clear();
+            this->_players.push_back(Player(TPlayer::kWhite));
+            this->_players.push_back(Player(TPlayer::kBlack));
+            this->_currentPlayerType = first;
             this->_state = TGameState::kActive;
             this->_board.loadDefaultBoard();
         }
