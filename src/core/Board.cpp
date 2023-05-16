@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/16 16:42:48
+ *  Update Date: 2023/05/16 22:09:13
  *  Description: Board Class
  */
 
@@ -86,11 +86,22 @@ void Board::loadDefaultBoard()
 
     // Generate default board
     // Generate pawn position
-    for ( size_t i = 0; i < this->_width; ++i )
-        this->_board[1][i] = new Pawn(TPlayer::kBlack);
-
-    for ( size_t i = 0; i < this->_width; ++i )
-        this->_board[6][i] = new Pawn(TPlayer::kWhite);
+    this->_board[1][0] = new Pawn(TPlayer::kBlack);
+    this->_board[1][1] = new Pawn(TPlayer::kBlack);
+    this->_board[1][2] = new Pawn(TPlayer::kBlack);
+    this->_board[1][3] = new Pawn(TPlayer::kBlack);
+    this->_board[1][4] = new Pawn(TPlayer::kBlack);
+    this->_board[1][5] = new Pawn(TPlayer::kBlack);
+    this->_board[1][6] = new Pawn(TPlayer::kBlack);
+    this->_board[1][7] = new Pawn(TPlayer::kBlack);
+    this->_board[6][0] = new Pawn(TPlayer::kWhite);
+    this->_board[6][1] = new Pawn(TPlayer::kWhite);
+    this->_board[6][2] = new Pawn(TPlayer::kWhite);
+    this->_board[6][3] = new Pawn(TPlayer::kWhite);
+    this->_board[6][4] = new Pawn(TPlayer::kWhite);
+    this->_board[6][5] = new Pawn(TPlayer::kWhite);
+    this->_board[6][6] = new Pawn(TPlayer::kWhite);
+    this->_board[6][7] = new Pawn(TPlayer::kWhite);
 
     // Generate king position
     this->_board[0][4] = new King(TPlayer::kBlack);
@@ -146,12 +157,49 @@ std::vector<const IPiece *> Board::getPiecesByOwner(TPlayer player) const
     {
         for ( const auto j : i )
         {
-            if ( j = nullptr )
+            if ( j == nullptr )
                 continue;
 
             // If piece owner is player, append to output
             if ( j->getOwner() == player )
                 r.push_back(j);
+        }
+    }
+    return r;
+}
+
+std::vector<Position> Board::findPiecesPos(TPlayer owner) const
+{
+    std::vector<Position> r;
+    Position pos;
+    for ( pos.y = 0; pos.y < this->_board.size(); ++pos.y )
+    {
+        for ( pos.x = 0; pos.x < this->_board[pos.y].size(); ++pos.x )
+        {
+            if ( !(this->isPositionPiece(pos)) )
+                continue;
+
+            if ( (*this)(pos)->getOwner() == owner )
+                r.push_back(pos);
+        }
+    }
+    return r;
+}
+
+std::vector<Position> Board::findPiecesPos(TPlayer owner, TPiece type) const
+{
+    std::vector<Position> r;
+    Position pos;
+    for ( pos.y = 0; pos.y < this->_board.size(); ++pos.y )
+    {
+        for ( pos.x = 0; pos.x < this->_board[pos.y].size(); ++pos.x )
+        {
+            if ( !(this->isPositionPiece(pos)) )
+                continue;
+
+            if ( (*this)(pos)->getOwner() == owner &&
+                 (*this)(pos)->type() == type )
+                r.push_back(pos);
         }
     }
     return r;
