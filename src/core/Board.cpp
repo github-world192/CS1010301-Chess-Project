@@ -12,8 +12,11 @@
 
 using namespace Chess;
 
-bool Board::initialize()
+void Board::loadDefaultBoard()
 {
+    // Clear board first
+    this->clear();
+
     // Generate default board
     // Generate pawn position
     for ( size_t i = 0; i < this->_width; ++i )

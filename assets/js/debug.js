@@ -87,3 +87,16 @@ function stopDragPiece() {
 function test() {
   update();
 }
+
+function getHashTag() {
+  return location.hash.substring(1);
+}
+
+function setHashTag(tag) {
+  const nextURL = "#" + tag;
+  const nextTitle = document.title;
+  const nextState = {};
+
+  // This will create a new entry in the browser's history, without reloading
+  window.history.pushState(nextState, nextTitle, nextURL);
+}

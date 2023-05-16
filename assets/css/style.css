@@ -11,7 +11,6 @@ body {
     overflow: hidden;
     display:flex;
     background-color: black;
-    cursor: default;
     font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
 }
 
