@@ -2,8 +2,8 @@
  *  File: PieceUtil.hpp
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/10 23:04:32
- *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/10 23:08:35
+ *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
+ *  Update Date: 2023/05/16 17:26:37
  *  Description: Piece Utility
  */
 
@@ -36,6 +36,7 @@ namespace Chess
             case TPiece::kRook:
                 return "rook";
             }
+            return "undefined";
         }
     };
 
