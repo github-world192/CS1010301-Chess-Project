@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Update Date: 2023/05/16 15:02:40
+ *  Update Date: 2023/05/16 17:27:09
  *  Description: Board Class
  */
 
@@ -50,8 +50,6 @@ void Board::loadDefaultBoard()
     this->_board[0][6] = new Knight(TPlayer::kBlack);
     this->_board[7][1] = new Knight(TPlayer::kWhite);
     this->_board[7][6] = new Knight(TPlayer::kWhite);
-
-    return true;
 }
 
 void Board::clear()
