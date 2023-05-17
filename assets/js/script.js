@@ -21,13 +21,17 @@ const startupBoard = $("#startup-board");
 const coverBoard = $("#cover-board");
 const menuBoard = $("#menu-board");
 const gameBoard = $("#game-board");
+const customBoard = $("#custom-board");
+
 
 function hideAllBoard() {
   startupBoard.hide();
   coverBoard.hide();
   menuBoard.hide();
   gameBoard.hide();
+  customBoard.hide();
 }
+
 
 function loadStartupView() {
   hideAllBoard();
@@ -56,6 +60,11 @@ function loadGameView() {
   updateGame();
 }
 
+function loadCustomView() {
+  hideAllBoard();
+  customBoard.show();
+}
+
 function updateBoardView() {
   switch (getHashTag()) {
     case "startup":
@@ -69,6 +78,9 @@ function updateBoardView() {
       break;
     case "game":
       loadGameView();
+      break;
+    case "custom":
+      loadCustomView();
       break;
     default:
       moveToBoardView("startup");
@@ -95,9 +107,10 @@ function start() {
   moveToBoardView("game");
 }
 
+
 function custom() 
 {
-  console.log("自訂");
+  moveToBoardView("custom");
 }
 
 function online() {

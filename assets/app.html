@@ -9,6 +9,7 @@
     <link rel=stylesheet type="text/css" href="./css/cover.css">
     <link rel=stylesheet type="text/css" href="./css/menu.css">
     <link rel=stylesheet type="text/css" href="./css/game.css">
+    <link rel=stylesheet type="text/css" href="./css/custom.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
 </head>
@@ -65,6 +66,41 @@
 
     </div>
 
+
+    <!-- Custom 面版 -->
+    <div class="custom-board" id="custom-board" style="display:none;">
+        <div class="custom-back-button" onclick="menu();">
+            Back
+        </div>
+
+        <!-- First Player -->
+        <div class="custom-first-player-label">
+            First Player
+        </div>
+        <select id="custom-first-player">
+            <option>Black</option>
+            <option>White</option>
+        </select>
+
+        <!-- Time -->
+        <div class="custom-time-label">
+            Time
+        </div>
+        <select id="custom-time">
+            <option>10:00</option>
+            <option>20:00</option>
+            <option>30:00</option>
+            <option>40:00</option>
+            <option>50:00</option>
+            <option>60:00</option>
+        </select>
+
+        <!-- Start -->
+        <div class="custom-start-button" onclick="start();">
+            Start
+        </div>
+    </div>
+
     <!-- Game 面版 -->
     <div class="game-board" id="game-board" style="display: none;">
         <div class="game-board-grid-container" id="game-board-container">
@@ -92,7 +128,17 @@
 
         </div>
 
+         <!-- CheckMate 版面 -->
+
+        <!-- Draw 版面 -->
+
+        <!-- Win 版面 -->
+
+        <!-- Time Out 版面 -->
     </div>
+
+    
+    
 
     <script src="./js/api.js"></script>
     <script src="./js/game.js"></script>
