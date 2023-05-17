@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 20:29:22
+ *  Update Date: 2023/05/17 22:47:02
  *  Description: GUI
  */
 
@@ -178,6 +178,21 @@ void GUI::OnDOMReady(ultralight::View *caller,
 
     // Get the global JavaScript object (aka 'window')
     JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
+
+    /**
+     * StartGame
+     */
+    JSStringRef name_StartGame =
+        JSStringCreateWithUTF8CString("apiStartGame");
+
+    JSObjectRef func_StartGame =
+        JSObjectMakeFunctionWithCallback(ctx, name_StartGame,
+                                         GUI::StartGame);
+
+    JSObjectSetProperty(ctx, globalObj, name_StartGame,
+                        func_StartGame, 0, 0);
+
+    JSStringRelease(name_StartGame);
 
     /**
      * GetCurrentPlayer
@@ -379,6 +394,29 @@ JSValueRef GUI::Test(JSContextRef ctx, JSObjectRef function,
     data["width"] = 5432;
     data["height"] = 9487;
     return GUI::JsonToJSValue(ctx, data);
+}
+
+JSValueRef GUI::StartGame(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[],
+                          JSValueRef *exception)
+{
+    // firstPlayer, matchTime
+    if ( argumentCount < 2 ||
+         !JSValueIsNumber(ctx, arguments[0]) ||
+         !JSValueIsNumber(ctx, arguments[1]) )
+    {
+        game.initialize();
+    }
+    else
+    {
+        int playerID = JSValueToNumber(ctx, arguments[0], exception);
+        int matchTime = JSValueToNumber(ctx, arguments[1], exception);
+        TPlayer first = (playerID == 0) ? TPlayer::kWhite : TPlayer::kBlack;
+        game.initialize(first, matchTime);
+    }
+
+    return JSValueMakeUndefined(ctx);
 }
 
 JSValueRef GUI::GetGameState(JSContextRef ctx, JSObjectRef function,

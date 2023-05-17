@@ -156,6 +156,7 @@ function coverPress() {
  * Menu Functions
  */
 function start() {
+  startGame();
   moveToBoardView("game");
 }
 

@@ -131,6 +131,14 @@ function resign() {
   apiResign();
 }
 
+function startGame() {
+  apiStartGame();
+}
+
+function startGameCustom(first, time) {
+  apiStartGame(first, time);
+}
+
 let gameTimer = 0;
 function loadGame() {
   if (gameTimer) window.clearInterval(gameTimer);
