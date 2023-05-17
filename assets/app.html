@@ -79,8 +79,8 @@
             First Player
         </div>
         <select id="custom-first-player">
-            <option>Black</option>
-            <option>White</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
         </select>
 
         <!-- Time -->
@@ -88,16 +88,16 @@
             Time
         </div>
         <select id="custom-time">
-            <option>10:00</option>
-            <option>20:00</option>
-            <option>30:00</option>
-            <option>40:00</option>
-            <option>50:00</option>
-            <option>60:00</option>
+            <option value="600">10:00</option>
+            <option value="1200">20:00</option>
+            <option value="1800">30:00</option>
+            <option value="2400">40:00</option>
+            <option value="3000">50:00</option>
+            <option value="3600">60:00</option>
         </select>
 
         <!-- Start -->
-        <div class="custom-start-button" onclick="start();">
+        <div class="custom-start-button" onclick="startCustomGame();">
             Start
         </div>
     </div>
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Win 面板 -->
-    <div class="win-board" id="win-board">
+    <div class="win-board" id="win-board" style="display: none;">
         <div class="win-board-container">
             <div class="win-board-item">
                 <div class="win-board-name" id="game-winner">
@@ -173,6 +173,7 @@
     <script src="./js/api.js"></script>
     <script src="./js/sound.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/custom.js"></script>
     <script src="./js/script.js"></script>
 </body>
 

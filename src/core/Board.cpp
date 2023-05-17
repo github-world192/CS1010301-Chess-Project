@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:28:51
+ *  Update Date: 2023/05/17 22:36:54
  *  Description: Board Class
  */
 
@@ -21,7 +21,7 @@ Board::Board(const Board &board)
     size_t i = 0;
     for ( const auto &it : board._board )
     {
-        this->_board[i].resize(board._board[i].size());
+        this->_board[i].resize(board._board[i].size(), nullptr);
         size_t j = 0;
 
         for ( const auto &jt : it )
@@ -355,6 +355,7 @@ void Board::_free()
             if ( piece != nullptr )
             {
                 delete piece;
+                this->_board[i][j] = nullptr;
             }
         }
     }

@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/17 14:04:39
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 20:26:26
+ *  Update Date: 2023/05/17 22:18:43
  *  Description: GUI
  */
 
@@ -85,6 +85,11 @@ private:
                            JSObjectRef thisObject, size_t argumentCount,
                            const JSValueRef arguments[],
                            JSValueRef *exception);
+
+    static JSValueRef StartGame(JSContextRef ctx, JSObjectRef function,
+                                JSObjectRef thisObject, size_t argumentCount,
+                                const JSValueRef arguments[],
+                                JSValueRef *exception);
 
     static JSValueRef GetCurrentPlayer(JSContextRef ctx, JSObjectRef function,
                                        JSObjectRef thisObject, size_t argumentCount,

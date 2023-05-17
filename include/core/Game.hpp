@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:36:30
+ *  Update Date: 2023/05/17 22:26:44
  *  Description: Game Class
  */
 
@@ -43,15 +43,21 @@ namespace Chess
 
         inline void initialize(TPlayer first)
         {
+            this->initialize(first, 600);
+        }
+
+        inline void initialize(TPlayer first, time_t matchTime)
+        {
             this->_players.clear();
             this->_players.push_back(Player(TPlayer::kWhite));
             this->_players.push_back(Player(TPlayer::kBlack));
             this->_currentPlayerType = first;
             this->_state = TGameState::kActive;
+            this->_board.clear();
             this->_board.loadDefaultBoard();
             this->_timerBlack.reset();
             this->_timerWhite.reset();
-            this->_matchTime = 600;
+            this->_matchTime = matchTime;
 
             updateGameState();
         }
