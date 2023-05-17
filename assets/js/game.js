@@ -88,9 +88,10 @@ function startDragPiece(x, y) {
           let fromY = parseInt(ui.draggable.parent().attr("piece-container-y"));
           let toX = parseInt($(this).attr("piece-container-x"));
           let toY = parseInt($(this).attr("piece-container-y"));
+          let success = movePiece(fromX, fromY, toX, toY);
           console.log(`fromX=${fromX}, fromY=${fromY}, toX=${toX}, toY=${toY}`);
-          console.log(movePiece(fromX, fromY, toX, toY));
-          playMoveSound();
+          console.log(success);
+          if (success) playMoveSound();
           updateGame();
         },
       });
