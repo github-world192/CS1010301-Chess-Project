@@ -72,19 +72,9 @@ function loadCustomView() {
   customBoard.show();
 }
 
-function loadDrawView() {
-  hideAllBoard();
-  drawBoard.show();
-}
-
-function loadWinView() { 
+function loadWinView() {
   hideAllBoard();
   winBoard.show();
-}
-
-function loadTimeoutView() {
-  hideAllBoard();
-  timeoutBoard.show();
 }
 
 function unloadStartupView() {}
@@ -118,14 +108,8 @@ function updateBoardView() {
     case "custom":
       loadCustomView();
       break;
-    case "draw":
-      loadDrawView();
-      break;
     case "win":
       loadWinView();
-      break;
-    case "timeout":
-      loadTimeoutView();
       break;
     default:
       moveToBoardView("startup");
