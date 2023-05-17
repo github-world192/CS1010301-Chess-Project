@@ -1,7 +1,7 @@
 /* Game 版面 */
 :root {
     --game-board-piece-spot-light-background: #ffffff;
-    --game-board-piece-spot-dark-background: #D9D9D9;
+    --game-board-piece-spot-dark-background: #C8BFC7;
 }
 
 .game-board {
@@ -16,6 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+    z-index: 2;
     display: grid;
 }
 .game-board-grid-item {
@@ -66,11 +67,11 @@
     background: var(--game-board-piece-spot-dark-background);
 }
 
-.game-player1-name-container {
+.game-player1-label-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 25%;
+    left: 20%;
     top: 10%;
     font-family: 'Inter';
     font-style: normal;
@@ -79,11 +80,24 @@
     color: #FFFFFF;
 }
 
-.game-player1-time-container {
+.game-player1-name-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 65%;
+    left: 20%;
+    top: 14%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.game-player2-label-container {
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    left: 74%;
     top: 10%;
     font-family: 'Inter';
     font-style: normal;
@@ -94,10 +108,10 @@
 
 .game-player2-name-container {
     position: absolute;
-    width: 10%;
+    width: 5%;
     height: 5%;
-    left: 65%;
-    top: 85%;
+    left: 74%;
+    top: 14%;
     font-family: 'Inter';
     font-style: normal;
     font-size: 24px;
@@ -105,22 +119,58 @@
     color: #FFFFFF;
 }
 
-.game-player2-time-container {
+.game-time-label-container {
     position: absolute;
     width: 10%;
     height: 5%;
-    left: 25%;
-    top: 85%;
+    top:3%;
     font-family: 'Inter';
     font-style: normal;
     font-size: 24px;
     text-align: center;
     color: #FFFFFF;
+}
+
+.game-time-time-container {
+    position: absolute;
+    width: 10%;
+    height: 5%;
+    top:3%;
+    left:4%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+
+.game-player1-chess-role
+{
+    position: absolute;
+    width: 637px;
+    height: 807px;
+    left: 5%;
+    top: 10%;
+    background: url(../image/chess-role/player1-pawn.png);
+    z-index: 1;
+}
+
+.game-player2-chess-role
+{
+    position: absolute;
+    width: 637px;
+    height: 807px;
+    left: 60%;
+    top: 10%;
+    background: url(../image/chess-role/player2-pawn.png);
+    z-index: 1;
 }
 
 .back-menu-button {
     position: absolute;
-    width: 10%;
+    display: flex;
+    width: 20%;
     height: 5%;
     left: 85%;
     top: 3%;
@@ -133,6 +183,72 @@
     border: none;
     cursor: pointer;
     color: #FFFFFF;
+}
+
+.menu-icon {
+    padding: 5px 0;
+    margin-top: 3.7%;
+    width: 25px;
+    height: 3px;
+    background: white;
+    background-clip: content-box; 
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+}
+
+.menu-text {
+    margin-left: 4%;
+
+}
+
+.game-promotion-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.4)
+}
+
+.game-promotion-panel-container {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.game-promotion-panel {
+    background-color: white;
+    display: inline-block;
+    padding: 4px;
+}
+
+.game-promotion-grid {
+    background-color: #D9D9D9;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 0;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.game-promotion-grid:hover {
+    background-color: #c4c2c2;
+}
+
+.game-promotion-grid:active {
+    background-color: #a09f9f;
+}
+
+.game-promotion-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 @keyframes game-hightlight-piece-container {

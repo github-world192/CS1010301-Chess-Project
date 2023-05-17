@@ -45,7 +45,7 @@
     position: absolute;
     width: 20%;
     height: 50%;
-    left:5%;
+    left:6.5%;
     top:25%;
     font-weight: 400;
     color: #FFFFFF;
@@ -58,8 +58,8 @@
     border: none;
     color: #FFFFFF;
     text-align: left;
-    padding: 12%;
-    font-size: 32px;
+    padding: 5%;
+    font-size: 40px;
     transition: all 0.5s;
     cursor: pointer;
 }
@@ -104,20 +104,27 @@
 }
 
 .menu-bg-img-container img {
-    width: 70%;
-    height: 50%;
+    width: 50%;
+    height: 100%;
     object-fit: contain; 
 }
 
 #menu-chessboard {  
-    position: relative;
-    /* margin-left: -10%; */ /* 等待美術待調整 */
-    z-index: 1;
+    position: absolute;
+    display: flex;
+    width: 2139.62px;
+    height: 1244.64px;
+    top: 600px;
+    background: #C8BFC7;
+    border-radius: 8px;
+    transform: rotate(65.8deg);
 }
 
 #menu-player {
     position: absolute;
-    /* margin-top: -10%; */ /* 等待美術待調整 */
+    display: flex;
+    margin-top: -20%;  
+    right: 35%;
     z-index: 2;
 }
 
