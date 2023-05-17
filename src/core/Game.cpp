@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:01:04
+ *  Update Date: 2023/05/17 14:37:01
  *  Description: Chess Class
  */
 
@@ -100,6 +100,29 @@ bool Game::isCheckmate() const
         return false;
 
     return true;
+}
+
+bool Game::isPromoting() const
+{
+    std::vector<Position> pawnPos = this->_board.findPiecesPos(TPiece::kPawn);
+    for ( const Position &p : pawnPos )
+    {
+        if ( MoveHandler::isPromoting(this->_board, p) )
+            return true;
+    }
+    return false;
+}
+
+bool Game::promoting(TPiece type)
+{
+    std::vector<Position> pawnPos = this->_board.findPiecesPos(TPiece::kPawn);
+    for ( const Position &p : pawnPos )
+    {
+        if ( MoveHandler::isPromoting(this->_board, p) )
+            return this->_board.promoting(p, type);
+    }
+
+    return false;
 }
 
 void Game::updateGameState()

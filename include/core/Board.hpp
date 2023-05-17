@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 23:03:02
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 04:57:47
+ *  Update Date: 2023/05/17 14:21:13
  *  Description: Board Class
  */
 
@@ -67,9 +67,13 @@ namespace Chess
 
         bool move(const Position &from, const Position &to);
 
+        bool promoting(const Position &pos, TPiece type);
+
         std::vector<const IPiece *> getPiecesByOwner(TPlayer player) const;
 
         std::vector<Position> findPiecesPos(TPlayer owner) const;
+
+        std::vector<Position> findPiecesPos(TPiece type) const;
 
         std::vector<Position> findPiecesPos(TPlayer owner, TPiece type) const;
 
