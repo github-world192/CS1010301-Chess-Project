@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 22:47:02
+ *  Update Date: 2023/05/17 22:56:23
  *  Description: GUI
  */
 
@@ -193,6 +193,21 @@ void GUI::OnDOMReady(ultralight::View *caller,
                         func_StartGame, 0, 0);
 
     JSStringRelease(name_StartGame);
+
+    /**
+     * UpdateGame
+     */
+    JSStringRef name_UpdateGame =
+        JSStringCreateWithUTF8CString("apiUpdateGame");
+
+    JSObjectRef func_UpdateGame =
+        JSObjectMakeFunctionWithCallback(ctx, name_UpdateGame,
+                                         GUI::UpdateGame);
+
+    JSObjectSetProperty(ctx, globalObj, name_UpdateGame,
+                        func_UpdateGame, 0, 0);
+
+    JSStringRelease(name_UpdateGame);
 
     /**
      * GetCurrentPlayer
@@ -415,6 +430,16 @@ JSValueRef GUI::StartGame(JSContextRef ctx, JSObjectRef function,
         TPlayer first = (playerID == 0) ? TPlayer::kWhite : TPlayer::kBlack;
         game.initialize(first, matchTime);
     }
+
+    return JSValueMakeUndefined(ctx);
+}
+
+JSValueRef GUI::UpdateGame(JSContextRef ctx, JSObjectRef function,
+                           JSObjectRef thisObject, size_t argumentCount,
+                           const JSValueRef arguments[],
+                           JSValueRef *exception)
+{
+    game.updateGame();
 
     return JSValueMakeUndefined(ctx);
 }

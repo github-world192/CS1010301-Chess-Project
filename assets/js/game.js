@@ -139,11 +139,17 @@ function startGameCustom(first, time) {
   apiStartGame(first, time);
 }
 
+function updateGameBackend() {
+  apiUpdateGame();
+}
+
 let gameTimer = 0;
 function loadGame() {
   if (gameTimer) window.clearInterval(gameTimer);
 
   gameTimer = window.setInterval(function () {
+    updateGameBackend();
+
     if (getGameState() == "active") {
       let promotionPanel = $("#promotion");
       if (isPromotion()) {
@@ -158,8 +164,8 @@ function loadGame() {
       moveToBoardView("win");
     }
 
-    $("#clock-black").text(getWhiteClock());
-    $("#clock-white").text(getBlackClock());
+    $("#clock-black").text(getBlackClock());
+    $("#clock-white").text(getWhiteClock());
   }, 500);
 }
 
