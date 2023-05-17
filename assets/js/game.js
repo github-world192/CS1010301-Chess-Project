@@ -131,12 +131,11 @@ function resign() {
   apiResign();
 }
 
-let gamePromotionTimer = 0;
-let gameClockTimer = 0;
+let gameTimer = 0;
 function loadGame() {
-  if (gamePromotionTimer) window.clearInterval(gamePromotionTimer);
+  if (gameTimer) window.clearInterval(gameTimer);
 
-  gamePromotionTimer = window.setInterval(function () {
+  gameTimer = window.setInterval(function () {
     if (getGameState() == "active") {
       let promotionPanel = $("#promotion");
       if (isPromotion()) {
@@ -145,16 +144,17 @@ function loadGame() {
         promotionPanel.hide();
       }
     }
-  }, 500);
 
-  if (gameClockTimer) window.clearInterval(gameClockTimer);
-  gameClockTimer = window.setInterval(function () {
+    if (getGameState() == "blackWin" || getGameState() == "whiteWin") {
+      $("#game-winner").text(getGameState() == "blackWin" ? "Black" : "White");
+      moveToBoardView("win");
+    }
+
     $("#clock-black").text(getWhiteClock());
     $("#clock-white").text(getBlackClock());
   }, 500);
 }
 
 function stopGame() {
-  window.clearInterval(gamePromotionTimer);
-  window.clearInterval(gameClockTimer);
+  window.clearInterval(gameTimer);
 }
