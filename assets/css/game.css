@@ -119,16 +119,33 @@
     color: #FFFFFF;
 }
 
-.game-time-label-container {
+.game-resign-button-container {
     position: absolute;
-    width: 10%;
+    /* width: 10%;
+     */
     height: 5%;
     top:3%;
+    left: 2%;
     font-family: 'Inter';
     font-style: normal;
     font-size: 24px;
     text-align: center;
     color: #FFFFFF;
+}
+
+.game-resign-button {
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    display: block;
+    border: none;
+    padding: 6px;
+    font-size: 28px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.game-resign-button:hover {
+    background-color: #C8BFC7;
 }
 
 .game-time-time-container {

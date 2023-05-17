@@ -106,19 +106,21 @@
         <div class="game-board-grid-container" id="game-board-container">
         </div>
 
-        <div class="game-player1-label-container">player1</div>
-        <div class="game-player1-name-container">NAME</div>
+        <div class="game-player1-label-container">Black</div>
+        <div class="game-player1-name-container" id="clock-black">00:00</div>
 
-        <div class="game-player2-label-container">player2</div>
-        <div class="game-player2-name-container">NAME</div>
+        <div class="game-player2-label-container">White</div>
+        <div class="game-player2-name-container" id="clock-white">00:00</div>
 
         <button class="back-menu-button" onclick="menu();">
             <div class="menu-icon"></div>
             <div class="menu-text">MENU</div>
         </button>
 
-        <div class="game-time-label-container">TIME</div>
-        <div class="game-time-time-container">10:00</div>
+        <div class="game-resign-button-container">
+            <button class="game-resign-button" onclick="resign();">Resign</button>
+        </div>
+        <!-- <div class="game-time-time-container">10:00</div> -->
 
         <div class="game-player1-chess-role">
 
