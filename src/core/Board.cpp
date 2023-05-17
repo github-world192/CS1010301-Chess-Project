@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 04:58:20
+ *  Update Date: 2023/05/17 14:28:51
  *  Description: Board Class
  */
 
@@ -150,6 +150,59 @@ bool Board::move(const Position &from, const Position &to)
     return true;
 }
 
+bool Board::promoting(const Position &pos, TPiece type)
+{
+    if ( !(this->isPositionValid(pos)) )
+        return false;
+
+    if ( !(this->isPositionPiece(pos)) )
+        return false;
+
+    if ( (*this)(pos)->type() != TPiece::kPawn )
+        return false;
+
+    TPlayer owner = (*this)(pos)->getOwner();
+    switch ( type )
+    {
+    case TPiece::kQueen:
+    {
+        this->_removePiece(pos);
+        this->_setPiece(pos, new Queen(owner));
+        return true;
+    }
+    break;
+
+    case TPiece::kBishop:
+    {
+        this->_removePiece(pos);
+        this->_setPiece(pos, new Bishop(owner));
+        return true;
+    }
+    break;
+
+    case TPiece::kKnight:
+    {
+        this->_removePiece(pos);
+        this->_setPiece(pos, new Knight(owner));
+        return true;
+    }
+    break;
+
+    case TPiece::kRook:
+    {
+        this->_removePiece(pos);
+        this->_setPiece(pos, new Rook(owner));
+        return true;
+    }
+    break;
+
+    default:
+        break;
+    }
+
+    return false;
+}
+
 std::vector<const IPiece *> Board::getPiecesByOwner(TPlayer player) const
 {
     std::vector<const IPiece *> r;
@@ -199,6 +252,24 @@ std::vector<Position> Board::findPiecesPos(TPlayer owner, TPiece type) const
 
             if ( (*this)(pos)->getOwner() == owner &&
                  (*this)(pos)->type() == type )
+                r.push_back(pos);
+        }
+    }
+    return r;
+}
+
+std::vector<Position> Board::findPiecesPos(TPiece type) const
+{
+    std::vector<Position> r;
+    Position pos;
+    for ( pos.y = 0; pos.y < this->_board.size(); ++pos.y )
+    {
+        for ( pos.x = 0; pos.x < this->_board[pos.y].size(); ++pos.x )
+        {
+            if ( !(this->isPositionPiece(pos)) )
+                continue;
+
+            if ( (*this)(pos)->type() == type )
                 r.push_back(pos);
         }
     }

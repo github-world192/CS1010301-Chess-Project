@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:29:30
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 13:45:30
+ *  Update Date: 2023/05/17 14:06:45
  *  Description: Move handler
  */
 
@@ -29,6 +29,8 @@ namespace Chess
     {
     public:
         static bool isMoveValid(const Board &board, const Move &move);
+
+        static bool isPromoting(const Board &board, const Position &pos);
 
         static std::vector<Position> getMovablePositions(
             const Board &board, const Position &pos);
