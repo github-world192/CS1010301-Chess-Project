@@ -119,7 +119,20 @@ function isPromotion() {
   return apiGetIsPromoting();
 }
 
+function getWhiteClock() {
+  return apiGetPlayerClock(0);
+}
+
+function getBlackClock() {
+  return apiGetPlayerClock(1);
+}
+
+function resign() {
+  apiResign();
+}
+
 let gamePromotionTimer = 0;
+let gameClockTimer = 0;
 function loadGame() {
   if (gamePromotionTimer) window.clearInterval(gamePromotionTimer);
 
@@ -133,8 +146,15 @@ function loadGame() {
       }
     }
   }, 500);
+
+  if (gameClockTimer) window.clearInterval(gameClockTimer);
+  gameClockTimer = window.setInterval(function () {
+    $("#clock-black").text(getWhiteClock());
+    $("#clock-white").text(getBlackClock());
+  }, 500);
 }
 
 function stopGame() {
   window.clearInterval(gamePromotionTimer);
+  window.clearInterval(gameClockTimer);
 }
