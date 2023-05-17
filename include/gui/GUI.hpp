@@ -1,9 +1,17 @@
+/**
+ *  File: GUI.hpp
+ *  Author: 張皓鈞(HAO) m831718@gmail.com
+ *  Create Date: 2023/05/17 14:04:39
+ *  Editor: 張皓鈞(HAO) m831718@gmail.com
+ *  Update Date: 2023/05/17 14:45:48
+ *  Description: GUI
+ */
+
 #pragma once
 
 #include "Inspector.hpp"
 #include "core/Game.hpp"
 #include "lib/json.hpp"
-#include <AppCore/AppCore.h>
 #include <JavaScriptCore/JavaScript.h>
 
 using Json = nlohmann::json;
@@ -85,6 +93,21 @@ private:
                                      JSObjectRef thisObject, size_t argumentCount,
                                      const JSValueRef arguments[],
                                      JSValueRef *exception);
+
+    static JSValueRef GetIsPromoting(JSContextRef ctx, JSObjectRef function,
+                                     JSObjectRef thisObject, size_t argumentCount,
+                                     const JSValueRef arguments[],
+                                     JSValueRef *exception);
+
+    static JSValueRef Promoting(JSContextRef ctx, JSObjectRef function,
+                                JSObjectRef thisObject, size_t argumentCount,
+                                const JSValueRef arguments[],
+                                JSValueRef *exception);
+
+    static JSValueRef Resign(JSContextRef ctx, JSObjectRef function,
+                                JSObjectRef thisObject, size_t argumentCount,
+                                const JSValueRef arguments[],
+                                JSValueRef *exception);
 
     static JSValueRef GetBoard(JSContextRef ctx, JSObjectRef function,
                                JSObjectRef thisObject, size_t argumentCount,

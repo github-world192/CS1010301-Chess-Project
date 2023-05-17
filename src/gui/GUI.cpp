@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 05:20:34
+ *  Update Date: 2023/05/17 14:53:43
  *  Description: GUI
  */
 
@@ -202,6 +202,51 @@ void GUI::OnDOMReady(ultralight::View *caller,
     JSStringRelease(name_GetPlayerClock);
 
     /**
+     * GetIsPromoting
+     */
+    JSStringRef name_GetIsPromoting =
+        JSStringCreateWithUTF8CString("apiGetIsPromoting");
+
+    JSObjectRef func_GetIsPromoting =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetIsPromoting,
+                                         GUI::GetIsPromoting);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetIsPromoting,
+                        func_GetIsPromoting, 0, 0);
+
+    JSStringRelease(name_GetIsPromoting);
+
+    /**
+     * Promoting
+     */
+    JSStringRef name_Promoting =
+        JSStringCreateWithUTF8CString("apiPromoting");
+
+    JSObjectRef func_Promoting =
+        JSObjectMakeFunctionWithCallback(ctx, name_Promoting,
+                                         GUI::Promoting);
+
+    JSObjectSetProperty(ctx, globalObj, name_Promoting,
+                        func_Promoting, 0, 0);
+
+    JSStringRelease(name_Promoting);
+
+    /**
+     * Resign
+     */
+    JSStringRef name_Resign =
+        JSStringCreateWithUTF8CString("apiResign");
+
+    JSObjectRef func_Resign =
+        JSObjectMakeFunctionWithCallback(ctx, name_Resign,
+                                         GUI::Resign);
+
+    JSObjectSetProperty(ctx, globalObj, name_Resign,
+                        func_Resign, 0, 0);
+
+    JSStringRelease(name_Resign);
+
+    /**
      * Test
      */
     JSStringRef name_Test = JSStringCreateWithUTF8CString("apiTest");
@@ -338,6 +383,42 @@ JSValueRef GUI::GetPlayerClock(JSContextRef ctx, JSObjectRef function,
     JSStringRelease(r_str);
 
     return r;
+}
+
+JSValueRef GUI::GetIsPromoting(JSContextRef ctx, JSObjectRef function,
+                               JSObjectRef thisObject, size_t argumentCount,
+                               const JSValueRef arguments[],
+                               JSValueRef *exception)
+{
+    bool isPromoting = game.isPromoting();
+    return JSValueMakeBoolean(ctx, isPromoting);
+}
+
+JSValueRef GUI::Promoting(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[],
+                          JSValueRef *exception)
+{
+    // pieceTypeID
+    if ( argumentCount < 1 ||
+         !JSValueIsNumber(ctx, arguments[0]) )
+        return JSValueMakeBoolean(ctx, false);
+
+    int pieceTypeID = JSValueToNumber(ctx, arguments[0], exception);
+    TPiece pieceType = PieceUtil::intToType(pieceTypeID);
+
+    bool success = game.promoting(pieceType);
+
+    return JSValueMakeBoolean(ctx, success);
+}
+
+JSValueRef GUI::Resign(JSContextRef ctx, JSObjectRef function,
+                       JSObjectRef thisObject, size_t argumentCount,
+                       const JSValueRef arguments[],
+                       JSValueRef *exception)
+{
+    game.resign();
+    return JSValueMakeBoolean(ctx, true);
 }
 
 JSValueRef GUI::GetCurrentPlayer(JSContextRef ctx, JSObjectRef function,
