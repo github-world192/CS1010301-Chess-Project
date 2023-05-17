@@ -1,0 +1,182 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chess</title>
+    <link rel=stylesheet type="text/css" href="./css/jquery-ui.min.css">
+    <link rel=stylesheet type="text/css" href="./css/style.css">
+    <link rel=stylesheet type="text/css" href="./css/startup.css">
+    <link rel=stylesheet type="text/css" href="./css/cover.css">
+    <link rel=stylesheet type="text/css" href="./css/menu.css">
+    <link rel=stylesheet type="text/css" href="./css/game.css">
+    <link rel=stylesheet type="text/css" href="./css/custom.css">
+    <link rel=stylesheet type="text/css" href="./css/win.css">
+    <script src="./js/jquery-3.6.4.min.js"></script>
+    <script src="./js/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <!-- Startup 面板 -->
+    <div class="startup-board" id="startup-board" style="display: none;">
+        <div class="startup-startup">
+            <!-- Game Studio Logo -->
+            <img src="./image/startup-logo.png" alt="">
+        </div>
+    </div>
+
+    <!-- Cover 面板 -->
+    <div class="cover-board" id="cover-board" style="display: none;">
+        <div class="cover-cover" onclick="coverPress();">
+            <!-- Cover Image -->
+            <div class="cover-cover-image-container">
+                <img src="./image/cover-cover.png" alt="">
+            </div>
+            <div class="cover-cover-hint-container" id="cover-cover-hint-container">
+                Press any key to start
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu 面版 -->
+    <div class="menu-board" id="menu-board" style="display: none;">
+        <!-- Menu Logo -->
+        <div class="menu-logo">
+            <img src="./image/menu-logo.png" alt="">
+        </div>
+
+        <!-- Menu group original-->
+        <div class="menu-group">
+            <span>A Group 6 Games Original</span>
+        </div>
+
+        <!-- Menu button 容器-->
+        <div class="menu-button-container">
+            <button onclick="start();"> <span>Classic Game</span></button>
+            <button onclick="custom();"> <span>Custom Game</span></button>
+            <button onclick="online();" style="color:gray"> <span>Online</span></button>
+            <button onclick="options();"> <span>Options</span></button>
+            <button onclick="about();"> <span>About</span></button>
+            <button onclick="exit();"> <span>Exit</span></button>
+        </div>
+
+        <!-- Menu 配圖容器 -->
+        <div class="menu-bg-img-container">
+            <img id="menu-player" src="image/menu-player.png" alt="">
+            <img id="menu-chessboard">
+        </div>
+
+    </div>
+
+
+    <!-- Custom 面版 -->
+    <div class="custom-board" id="custom-board" style="display:none;">
+        <div class="custom-back-button" onclick="menu();">
+            Back
+        </div>
+
+        <!-- First Player -->
+        <div class="custom-first-player-label">
+            First Player
+        </div>
+        <select id="custom-first-player">
+            <option value="black">Black</option>
+            <option value="white">White</option>
+        </select>
+
+        <!-- Time -->
+        <div class="custom-time-label">
+            Time
+        </div>
+        <select id="custom-time">
+            <option value="60">01:00</option>
+            <option value="300">05:00</option>
+            <option value="600">10:00</option>
+            <option value="1200">20:00</option>
+            <option value="1800">30:00</option>
+            <option value="2400">40:00</option>
+            <option value="3000">50:00</option>
+            <option value="3600">60:00</option>
+        </select>
+
+        <!-- Start -->
+        <div class="custom-start-button" onclick="startCustomGame();">
+            Start
+        </div>
+    </div>
+
+    <!-- Game 面版 -->
+    <div class="game-board" id="game-board" style="display: none;">
+        <div class="game-board-grid-container" id="game-board-container">
+        </div>
+
+        <div class="game-player1-label-container">Black</div>
+        <div class="game-player1-name-container" id="clock-black">00:00</div>
+
+        <div class="game-player2-label-container">White</div>
+        <div class="game-player2-name-container" id="clock-white">00:00</div>
+
+        <button class="back-menu-button" onclick="menu();">
+            <div class="menu-icon"></div>
+            <div class="menu-text">MENU</div>
+        </button>
+
+        <div class="game-resign-button-container">
+            <button class="game-resign-button" onclick="resign();">Resign</button>
+        </div>
+        <!-- <div class="game-time-time-container">10:00</div> -->
+
+        <div class="game-player1-chess-role">
+
+        </div>
+
+        <div class="game-player2-chess-role">
+
+        </div>
+
+        <div class="game-promotion-cover" id="promotion" style="display: none;">
+            <div class="game-promotion-panel-container">
+                <div class="game-promotion-panel">
+                    <div class="game-promotion-grid" onclick="promotion(5);">
+                        <img src="./image/piece/rook-white.png" alt="">
+                    </div>
+                    <div class="game-promotion-grid" onclick="promotion(4);">
+                        <img src="./image/piece/queen-white.png" alt="">
+                    </div>
+                    <div class="game-promotion-grid" onclick="promotion(2);">
+                        <img src="./image/piece/knight-white.png" alt="">
+                    </div>
+                    <div class="game-promotion-grid" onclick="promotion(0);">
+                        <img src="./image/piece/bishop-white.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Win 面板 -->
+    <div class="win-board" id="win-board" style="display: none;">
+        <div class="win-board-container">
+            <div class="win-board-item">
+                <div class="win-board-name" id="game-winner">
+                    Winner
+                </div>
+                <div class="win-board-button-container">
+                    <button class="win-board-button" onclick="moveToBoardView('menu');">Back Menu</button>
+                </div>
+            </div>
+        </div>
+        <!-- <button class=" back-menu-button" onclick="menu();">
+                <div class="menu-icon"></div>
+                <div class="menu-text">MENU</div>
+                </button> -->
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/sound.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/custom.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

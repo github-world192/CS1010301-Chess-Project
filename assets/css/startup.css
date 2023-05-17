@@ -1,0 +1,24 @@
+/* Startup 面板 */
+.startup-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #FFFAF5;
+    overflow: hidden;
+    text-align: center;
+    cursor: none;
+    display: flex;
+}
+
+
+.startup-startup {
+    margin: auto;
+}
+
+.startup-startup img {
+    height: 50vh;
+    object-fit: contain;
+}
+

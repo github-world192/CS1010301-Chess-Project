@@ -1,0 +1,16 @@
+*:not(input) {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display:flex;
+    background-color: black;
+    font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+}
+
