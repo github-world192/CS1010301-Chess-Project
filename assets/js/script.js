@@ -21,12 +21,14 @@ const startupBoard = $("#startup-board");
 const coverBoard = $("#cover-board");
 const menuBoard = $("#menu-board");
 const gameBoard = $("#game-board");
+const customBoard = $("#custom-board");
 
 function hideAllBoard() {
   startupBoard.hide();
   coverBoard.hide();
   menuBoard.hide();
   gameBoard.hide();
+  customBoard.hide();
 }
 
 function loadStartupView() {
@@ -41,6 +43,7 @@ function loadStartupView() {
 }
 
 function loadCoverView() {
+  stopAllSound();
   hideAllBoard();
   coverBoard.fadeIn(1000);
 }
@@ -48,6 +51,7 @@ function loadCoverView() {
 function loadMenuView() {
   hideAllBoard();
   menuBoard.show();
+  playBGM();
 }
 
 function loadGameView() {
@@ -57,7 +61,26 @@ function loadGameView() {
   updateGame();
 }
 
+function loadCustomView() {
+  hideAllBoard();
+  customBoard.show();
+}
+
+function unloadStartupView() {}
+
+function unloadCoverView() {}
+
+function unloadMenuView() {}
+
+function unloadGameView() {
+  stopGame();
+}
+
+function unloadCustomView() {}
+
+let lastHashTag = undefined;
 function updateBoardView() {
+  // Load View
   switch (getHashTag()) {
     case "startup":
       loadStartupView();
@@ -71,9 +94,35 @@ function updateBoardView() {
     case "game":
       loadGameView();
       break;
+    case "custom":
+      loadCustomView();
+      break;
     default:
       moveToBoardView("startup");
       break;
+  }
+  // Unload View
+  if (lastHashTag != getHashTag()) {
+    switch (lastHashTag) {
+      case "startup":
+        unloadStartupView();
+        break;
+      case "cover":
+        unloadCoverView();
+        break;
+      case "menu":
+        unloadMenuView();
+        break;
+      case "game":
+        unloadGameView();
+        break;
+      case "custom":
+        unloadCustomView();
+        break;
+    }
+  }
+  if (lastHashTag != getHashTag()) {
+    lastHashTag = getHashTag();
   }
 }
 
@@ -97,7 +146,7 @@ function start() {
 }
 
 function custom() {
-  console.log("自訂");
+  moveToBoardView("custom");
 }
 
 function online() {
@@ -133,6 +182,10 @@ $(window).on("hashchange", function () {
 /**
  * Document Event
  */
+$(document).on("click", "body button, a, input", function () {
+  playClickSound();
+});
+
 $(document).ready(function () {
   updateBoardView();
 });
