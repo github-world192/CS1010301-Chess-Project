@@ -16,6 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+    z-index: 2;
     display: grid;
 }
 .game-board-grid-item {
@@ -150,6 +151,7 @@
     left: 5%;
     top: 10%;
     background: url(../image/chess-role/player1-pawn.png);
+    z-index: 1;
 }
 
 .game-player2-chess-role
@@ -160,7 +162,7 @@
     left: 60%;
     top: 10%;
     background: url(../image/chess-role/player2-pawn.png);
-
+    z-index: 1;
 }
 
 .back-menu-button {
