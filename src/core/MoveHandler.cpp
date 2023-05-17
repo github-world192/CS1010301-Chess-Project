@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 04:56:32
+ *  Update Date: 2023/05/17 13:57:48
  *  Description: Move Handler
  */
 
@@ -47,7 +47,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         Bishop *bishop = (Bishop *)piece;
         Bishop &bishopRef = *bishop;
-        movablePos = MoveHandler::_getBishopMovablePos(board, bishopRef, pos);
+        movablePos = MoveHandler::getBishopMovablePos(board, bishopRef, pos);
     }
     break;
 
@@ -55,7 +55,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         King *king = (King *)piece;
         King &kingRef = *king;
-        movablePos = MoveHandler::_getKingMovablePos(board, kingRef, pos);
+        movablePos = MoveHandler::getKingMovablePos(board, kingRef, pos);
     }
     break;
 
@@ -63,7 +63,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         Knight *knight = (Knight *)piece;
         Knight &knightRef = *knight;
-        movablePos = MoveHandler::_getKnightMovablePos(board, knightRef, pos);
+        movablePos = MoveHandler::getKnightMovablePos(board, knightRef, pos);
     }
     break;
 
@@ -71,7 +71,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         Pawn *pawn = (Pawn *)piece;
         Pawn &pawnRef = *pawn;
-        movablePos = MoveHandler::_getPawnMovablePos(board, pawnRef, pos);
+        movablePos = MoveHandler::getPawnMovablePos(board, pawnRef, pos);
     }
     break;
 
@@ -79,7 +79,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         Queen *queen = (Queen *)piece;
         Queen &queenRef = *queen;
-        movablePos = MoveHandler::_getQueenMovablePos(board, queenRef, pos);
+        movablePos = MoveHandler::getQueenMovablePos(board, queenRef, pos);
     }
     break;
 
@@ -87,7 +87,7 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         Rook *rook = (Rook *)piece;
         Rook &rookRef = *rook;
-        movablePos = MoveHandler::_getRookMovablePos(board, rookRef, pos);
+        movablePos = MoveHandler::getRookMovablePos(board, rookRef, pos);
     }
     break;
     }
@@ -109,7 +109,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Bishop *bishop = (Bishop *)piece;
         Bishop &bishopRef = *bishop;
-        killablePos = MoveHandler::_getBishopKillablePos(board, bishopRef, pos);
+        killablePos = MoveHandler::getBishopKillablePos(board, bishopRef, pos);
     }
     break;
 
@@ -118,7 +118,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
         King *king = (King *)piece;
         King &kingRef = *king;
         killablePos =
-            MoveHandler::_getKingKillablePos(board, kingRef, pos);
+            MoveHandler::getKingKillablePos(board, kingRef, pos);
     }
     break;
 
@@ -126,7 +126,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Knight *knight = (Knight *)piece;
         Knight &knightRef = *knight;
-        killablePos = MoveHandler::_getKnightKillablePos(board, knightRef, pos);
+        killablePos = MoveHandler::getKnightKillablePos(board, knightRef, pos);
     }
     break;
 
@@ -134,7 +134,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Pawn *pawn = (Pawn *)piece;
         Pawn &pawnRef = *pawn;
-        killablePos = MoveHandler::_getPawnKillablePos(board, pawnRef, pos);
+        killablePos = MoveHandler::getPawnKillablePos(board, pawnRef, pos);
     }
     break;
 
@@ -142,7 +142,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Queen *queen = (Queen *)piece;
         Queen &queenRef = *queen;
-        killablePos = MoveHandler::_getQueenKillablePos(board, queenRef, pos);
+        killablePos = MoveHandler::getQueenKillablePos(board, queenRef, pos);
     }
     break;
 
@@ -150,7 +150,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Rook *rook = (Rook *)piece;
         Rook &rookRef = *rook;
-        killablePos = MoveHandler::_getRookKillablePos(board, rookRef, pos);
+        killablePos = MoveHandler::getRookKillablePos(board, rookRef, pos);
     }
     break;
     }
@@ -192,6 +192,28 @@ std::vector<Position> MoveHandler::getMovableKillablePositions(
     return positions;
 }
 
+std::vector<std::pair<Move, Move>>
+MoveHandler::getCastlingMove(const Board &board, const Position &pos)
+{
+    std::vector<std::pair<Move, Move>> castlingMove;
+    const IPiece *piece = board(pos);
+    switch ( piece->type() )
+    {
+    case TPiece::kKing:
+    {
+        King *king = (King *)piece;
+        King &kingRef = *king;
+        MoveHandler::getKingCastlingPos(board, kingRef, pos, castlingMove);
+    }
+    break;
+
+    default:
+        break;
+    }
+
+    return castlingMove;
+}
+
 Position MoveHandler::_toRealPos(const Position &origin,
                                  const Position &relative)
 {
@@ -220,7 +242,7 @@ std::vector<Position> MoveHandler::_removeRepeatPos(
     return r;
 }
 
-std::vector<Position> MoveHandler::_getBishopMovablePos(
+std::vector<Position> MoveHandler::getBishopMovablePos(
     const Board &board, const Bishop &bishop, const Position &pos)
 {
     std::vector<Position> movablePos;
@@ -256,10 +278,10 @@ std::vector<Position> MoveHandler::_getBishopMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getBishopKillablePos(
+std::vector<Position> MoveHandler::getBishopKillablePos(
     const Board &board, const Bishop &bishop, const Position &pos)
 {
-    return MoveHandler::_getBishopMovablePos(board, bishop, pos);
+    return MoveHandler::getBishopMovablePos(board, bishop, pos);
 }
 
 bool MoveHandler::_isKingPosKillable(const Board &board, const Position &pos,
@@ -285,7 +307,7 @@ bool MoveHandler::_isKingPosKillable(const Board &board, const Position &pos,
     return false;
 }
 
-std::vector<Position> MoveHandler::_getKingMovablePos(
+std::vector<Position> MoveHandler::getKingMovablePos(
     const Board &board, const King &king, const Position &pos)
 {
     std::vector<Position> movablePos;
@@ -312,6 +334,54 @@ std::vector<Position> MoveHandler::_getKingMovablePos(
         else
             movablePos.push_back(realP);
     }
+
+    // Get castling positions
+    std::vector<std::pair<Move, Move>> castlingMove;
+    std::vector<Position> castlingPoss =
+        MoveHandler::getKingCastlingPos(board, king, pos, castlingMove);
+
+    movablePos.insert(movablePos.end(), castlingPoss.begin(), castlingPoss.end());
+
+    return movablePos;
+}
+
+std::vector<Position> MoveHandler::getKingKillablePos(
+    const Board &board, const King &king, const Position &pos)
+{
+    std::vector<Position> movablePos;
+
+    // Define 8 possible move
+    std::vector<Position> possibleMove = {
+        {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+
+    for ( const Position &p : possibleMove )
+    {
+        Position realP = MoveHandler::_toRealPos(pos, p);
+
+        // If position invalid, break
+        if ( !(board.isPositionValid(realP)) )
+            continue;
+
+        // If there a piece at position
+        if ( board.isPositionPiece(realP) )
+        {
+            if ( board(realP)->getOwner() != king.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+            movablePos.push_back(realP);
+    }
+
+    return movablePos;
+}
+
+std::vector<Position> MoveHandler::getKingCastlingPos(
+    const Board &board, const King &king,
+    const Position &pos, std::vector<std::pair<Move, Move>> &castlingMove)
+{
+    castlingMove.clear(); // For save valid castling move pair
+    std::vector<Position> movablePos;
 
     // If king moved, no need to do castling check
     if ( king.getMoved() )
@@ -346,11 +416,19 @@ std::vector<Position> MoveHandler::_getKingMovablePos(
                 if ( realCp == rookP )
                 {
                     // Calculate castling position
-                    Position castlingPos = pos + (cd * 2);
+                    Position castlingPos = pos + (cd * 2);       // King new pos
+                    Position rookCastlingPos = castlingPos - cd; // Rook new pos
                     // If the castling position will not let king death
                     if ( !(MoveHandler::_isKingPosKillable(board, castlingPos,
                                                            king.getOwner())) )
+                    {
                         movablePos.push_back(castlingPos);
+                        // Save valid castling move pair
+                        castlingMove.push_back(
+                            std::pair<Move, Move>(
+                                Move(king.getOwner(), pos, castlingPos),
+                                Move(king.getOwner(), rookP, rookCastlingPos)));
+                    }
                     break;
                 }
 
@@ -364,38 +442,7 @@ std::vector<Position> MoveHandler::_getKingMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getKingKillablePos(
-    const Board &board, const King &king, const Position &pos)
-{
-    std::vector<Position> movablePos;
-
-    // Define 8 possible move
-    std::vector<Position> possibleMove = {
-        {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-
-    for ( const Position &p : possibleMove )
-    {
-        Position realP = MoveHandler::_toRealPos(pos, p);
-
-        // If position invalid, break
-        if ( !(board.isPositionValid(realP)) )
-            continue;
-
-        // If there a piece at position
-        if ( board.isPositionPiece(realP) )
-        {
-            if ( board(realP)->getOwner() != king.getOwner() )
-                // Append to movablePos
-                movablePos.push_back(realP);
-        }
-        else
-            movablePos.push_back(realP);
-    }
-
-    return movablePos;
-}
-
-std::vector<Position> MoveHandler::_getKnightMovablePos(
+std::vector<Position> MoveHandler::getKnightMovablePos(
     const Board &board, const Knight &knight, const Position &pos)
 {
     std::vector<Position> movablePos;
@@ -426,13 +473,13 @@ std::vector<Position> MoveHandler::_getKnightMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getKnightKillablePos(
+std::vector<Position> MoveHandler::getKnightKillablePos(
     const Board &board, const Knight &knight, const Position &pos)
 {
-    return MoveHandler::_getKnightMovablePos(board, knight, pos);
+    return MoveHandler::getKnightMovablePos(board, knight, pos);
 }
 
-std::vector<Position> MoveHandler::_getPawnMovablePos(
+std::vector<Position> MoveHandler::getPawnMovablePos(
     const Board &board, const Pawn &pawn, const Position &pos)
 {
     int8_t dir = pawn.isBlack() ? 1 : -1;
@@ -464,7 +511,7 @@ std::vector<Position> MoveHandler::_getPawnMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getPawnKillablePos(
+std::vector<Position> MoveHandler::getPawnKillablePos(
     const Board &board, const Pawn &pawn, const Position &pos)
 {
     int8_t dir = pawn.isBlack() ? 1 : -1;
@@ -496,7 +543,7 @@ std::vector<Position> MoveHandler::_getPawnKillablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getQueenMovablePos(
+std::vector<Position> MoveHandler::getQueenMovablePos(
     const Board &board, const Queen &queen, const Position &pos)
 {
     std::vector<Position> movablePos;
@@ -533,13 +580,13 @@ std::vector<Position> MoveHandler::_getQueenMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getQueenKillablePos(
+std::vector<Position> MoveHandler::getQueenKillablePos(
     const Board &board, const Queen &queen, const Position &pos)
 {
-    return MoveHandler::_getQueenMovablePos(board, queen, pos);
+    return MoveHandler::getQueenMovablePos(board, queen, pos);
 }
 
-std::vector<Position> MoveHandler::_getRookMovablePos(
+std::vector<Position> MoveHandler::getRookMovablePos(
     const Board &board, const Rook &rook, const Position &pos)
 {
     std::vector<Position> movablePos;
@@ -575,8 +622,8 @@ std::vector<Position> MoveHandler::_getRookMovablePos(
     return movablePos;
 }
 
-std::vector<Position> MoveHandler::_getRookKillablePos(
+std::vector<Position> MoveHandler::getRookKillablePos(
     const Board &board, const Rook &rook, const Position &pos)
 {
-    return MoveHandler::_getRookMovablePos(board, rook, pos);
+    return MoveHandler::getRookMovablePos(board, rook, pos);
 }

@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 05:35:10
+ *  Update Date: 2023/05/17 14:01:04
  *  Description: Chess Class
  */
 
@@ -34,6 +34,21 @@ bool Game::makeMove(const Move &move)
 
     if ( !MoveHandler::isMoveValid(this->_board, move) )
         return false;
+
+    // Check is a castling move?
+    std::vector<std::pair<Move, Move>> castlingMove =
+        MoveHandler::getCastlingMove(this->_board, move.getFrom());
+
+    for ( const auto &mp : castlingMove )
+    {
+        // if is a castling move
+        if ( mp.first == move )
+        {
+            // do castling
+            this->_board.move(mp.second.getFrom(), mp.second.getTo());
+            break;
+        }
+    }
 
     if ( this->_board.move(move.getFrom(), move.getTo()) )
     {
