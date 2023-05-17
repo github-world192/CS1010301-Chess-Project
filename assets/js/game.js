@@ -107,7 +107,9 @@ function getGameState() {
 }
 
 function promotion(type) {
-  return apiPromoting(type);
+  let success = apiPromoting(type);
+  updateBoard();
+  return success;
 }
 
 function isPromotion() {
