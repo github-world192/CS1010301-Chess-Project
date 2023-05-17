@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:53:43
+ *  Update Date: 2023/05/17 20:29:22
  *  Description: GUI
  */
 
@@ -15,13 +15,15 @@
 #include <string>
 #include <vector>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
 Game game;
 
-GUI::GUI()
+GUI::GUI(int argc, char *argv[])
 {
+    this->ParseArgs(argc, argv);
+
     Settings settings;
 
     settings.force_cpu_renderer = false;
@@ -31,12 +33,33 @@ GUI::GUI()
     ///
     app_ = App::Create(settings);
 
+    bool fullscreen = true;
+    uint32_t width = app_->main_monitor()->width();
+    uint32_t height = app_->main_monitor()->height();
+    if ( this->IsArgsSet("--window") )
+    {
+        width = WINDOW_WIDTH;
+        height = WINDOW_HEIGHT;
+        fullscreen = false;
+    }
+
+    std::string url = "file:///app.html";
+    if ( this->IsArgsSet("--skip-intro") )
+    {
+        url = "file:///app.html#menu";
+    }
+
+    if ( this->IsArgsSet("--debug") )
+    {
+        url = "file:///debug.html";
+    }
+
     ///
     /// Create a resizable window by passing by OR'ing our window flags with
     /// kWindowFlags_Resizable.
     ///
-    window_ = Window::Create(app_->main_monitor(), WINDOW_WIDTH, WINDOW_HEIGHT,
-                             true, kWindowFlags_Titled | kWindowFlags_Resizable);
+    window_ = Window::Create(app_->main_monitor(), width, height,
+                             fullscreen, kWindowFlags_Titled | kWindowFlags_Resizable | kWindowFlags_Maximizable);
 
     ///
     /// Create our HTML overlay-- we don't care about its initial size and
@@ -52,7 +75,7 @@ GUI::GUI()
     ///
     /// Load a page into our overlay's View
     ///
-    overlay_->view()->LoadURL("file:///app.html");
+    overlay_->view()->LoadURL(url.c_str());
 
     ///
     /// Register our GUI instance as an AppListener so we can handle the
@@ -321,6 +344,21 @@ void GUI::OnChangeTitle(ultralight::View *caller,
     /// We update the main window's title here.
     ///
     window_->SetTitle(title.utf8().data());
+}
+
+void GUI::ParseArgs(int argc, char *argv[])
+{
+    this->args_.clear();
+    for ( int i = 1; i < argc; ++i )
+    {
+        this->args_.push_back(argv[i]);
+    }
+}
+
+bool GUI::IsArgsSet(std::string arg)
+{
+    auto it = std::find(this->args_.begin(), this->args_.end(), arg);
+    return (it != this->args_.end());
 }
 
 JSValueRef GUI::JsonToJSValue(JSContextRef ctx, const Json &json)

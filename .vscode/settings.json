@@ -129,6 +129,11 @@
     "forward_list": "cpp",
     "ranges": "cpp",
     "span": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "filesystem": "cpp",
+    "xlocbuf": "cpp",
+    "xlocmes": "cpp",
+    "xloctime": "cpp",
+    "xtree": "cpp"
   }
 }
