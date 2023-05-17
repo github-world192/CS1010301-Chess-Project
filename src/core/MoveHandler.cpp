@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 13:57:48
+ *  Update Date: 2023/05/17 14:12:07
  *  Description: Move Handler
  */
 
@@ -30,6 +30,41 @@ bool MoveHandler::isMoveValid(const Board &board, const Move &move)
     {
         if ( p.x == move.getTo().x && p.y == move.getTo().y )
             return true;
+    }
+
+    return false;
+}
+
+bool MoveHandler::isPromoting(const Board &board, const Position &pos)
+{
+    if ( !(board.isPositionValid(pos)) )
+        return false;
+
+    if ( !(board.isPositionPiece(pos)) )
+        return false;
+
+    const IPiece *piece = board(pos);
+    switch ( piece->type() )
+    {
+    case TPiece::kPawn:
+    {
+        if ( piece->getOwner() == TPlayer::kBlack )
+        {
+            // If black pawn move to board bottom
+            if ( pos.y == board.height() - 1 )
+                return true;
+        }
+        if ( piece->getOwner() == TPlayer::kWhite )
+        {
+            // If white pawn move to board top
+            if ( pos.y == 0 )
+                return true;
+        }
+    }
+    break;
+
+    default:
+        break;
     }
 
     return false;

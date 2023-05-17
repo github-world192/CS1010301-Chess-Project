@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 05:10:21
+ *  Update Date: 2023/05/17 14:36:30
  *  Description: Game Class
  */
 
@@ -124,6 +124,8 @@ namespace Chess
         bool makeMove(const Move &move);
 
         bool isCheckmate() const;
+        bool isPromoting() const;
+        bool promoting(TPiece type);
 
         void updateGameState();
         void updateTimer();
