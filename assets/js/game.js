@@ -101,3 +101,31 @@ function stopDragPiece() {
     $(this).removeClass("game-board-piece-container-droppable");
   });
 }
+
+function getGameState() {
+  return apiGetGameState();
+}
+
+function promotion(type) {
+  return apiPromoting(type);
+}
+
+function isPromotion() {
+  return apiGetIsPromoting();
+}
+
+let gamePromotionTimer = 0;
+function loadGame() {
+  if (gamePromotionTimer) window.clearInterval(gamePromotionTimer);
+
+  gamePromotionTimer = window.setInterval(function () {
+    if (getGameState() == "active") {
+      let promotionPanel = $("#promotion");
+      if (isPromotion()) {
+        promotionPanel.show();
+      } else {
+        promotionPanel.hide();
+      }
+    }
+  }, 500);
+}

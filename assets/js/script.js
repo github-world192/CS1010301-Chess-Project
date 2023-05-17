@@ -53,6 +53,7 @@ function loadMenuView() {
 function loadGameView() {
   hideAllBoard();
   gameBoard.show();
+  loadGame();
   updateGame();
 }
 
@@ -95,8 +96,7 @@ function start() {
   moveToBoardView("game");
 }
 
-function custom() 
-{
+function custom() {
   console.log("自訂");
 }
 
