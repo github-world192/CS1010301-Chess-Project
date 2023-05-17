@@ -71,7 +71,7 @@ function movePiece(fromX, fromY, toX, toY) {
 
 function startDragPiece(x, y) {
   let movablePos = apiGetBoardPieceMovablePos(x, y);
-  if (movablePos === undefined) return;
+  if (!movablePos) return;
 
   console.log(movablePos);
 

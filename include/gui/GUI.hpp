@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/17 14:04:39
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:45:48
+ *  Update Date: 2023/05/17 20:26:26
  *  Description: GUI
  */
 
@@ -13,6 +13,8 @@
 #include "core/Game.hpp"
 #include "lib/json.hpp"
 #include <JavaScriptCore/JavaScript.h>
+#include <string>
+#include <vector>
 
 using Json = nlohmann::json;
 using namespace ultralight;
@@ -24,7 +26,7 @@ class GUI : public AppListener,
             public ViewListener
 {
 public:
-    GUI();
+    GUI(int argc, char *argv[]);
 
     virtual ~GUI();
 
@@ -63,11 +65,16 @@ public:
     virtual RefPtr<View> OnCreateInspectorView(ultralight::View *caller, bool is_local,
                                                const String &inspected_url) override;
 
+    void ParseArgs(int argc, char *argv[]);
+
+    bool IsArgsSet(std::string arg);
+
 protected:
     RefPtr<App> app_;
     RefPtr<Window> window_;
     RefPtr<Overlay> overlay_;
     Inspector *inspector_;
+    std::vector<std::string> args_;
 
 private:
     static GUI instance_;
@@ -105,9 +112,9 @@ private:
                                 JSValueRef *exception);
 
     static JSValueRef Resign(JSContextRef ctx, JSObjectRef function,
-                                JSObjectRef thisObject, size_t argumentCount,
-                                const JSValueRef arguments[],
-                                JSValueRef *exception);
+                             JSObjectRef thisObject, size_t argumentCount,
+                             const JSValueRef arguments[],
+                             JSValueRef *exception);
 
     static JSValueRef GetBoard(JSContextRef ctx, JSObjectRef function,
                                JSObjectRef thisObject, size_t argumentCount,
