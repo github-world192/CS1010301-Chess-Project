@@ -108,15 +108,10 @@ function start() {
   moveToBoardView("game");
 }
 
-<<<<<<< HEAD
 
 function custom() 
 {
   moveToBoardView("custom");
-=======
-function custom() {
-  console.log("自訂");
->>>>>>> frontend
 }
 
 function online() {
