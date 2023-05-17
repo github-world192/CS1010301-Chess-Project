@@ -22,6 +22,9 @@ const coverBoard = $("#cover-board");
 const menuBoard = $("#menu-board");
 const gameBoard = $("#game-board");
 const customBoard = $("#custom-board");
+const drawBoard = $("#draw-board");
+const winBoard = $("#win-board");
+const timeoutBoard = $("#timeout-board");
 
 function hideAllBoard() {
   startupBoard.hide();
@@ -29,6 +32,9 @@ function hideAllBoard() {
   menuBoard.hide();
   gameBoard.hide();
   customBoard.hide();
+  drawBoard.hide();
+  winBoard.hide();
+  timeoutBoard.hide();
 }
 
 function loadStartupView() {
@@ -66,6 +72,21 @@ function loadCustomView() {
   customBoard.show();
 }
 
+function loadDrawView() {
+  hideAllBoard();
+  drawBoard.show();
+}
+
+function loadWinView() { 
+  hideAllBoard();
+  winBoard.show();
+}
+
+function loadTimeoutView() {
+  hideAllBoard();
+  timeoutBoard.show();
+}
+
 function unloadStartupView() {}
 
 function unloadCoverView() {}
@@ -96,6 +117,15 @@ function updateBoardView() {
       break;
     case "custom":
       loadCustomView();
+      break;
+    case "draw":
+      loadDrawView();
+      break;
+    case "win":
+      loadWinView();
+      break;
+    case "timeout":
+      loadTimeoutView();
       break;
     default:
       moveToBoardView("startup");

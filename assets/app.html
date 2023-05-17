@@ -10,6 +10,9 @@
     <link rel=stylesheet type="text/css" href="./css/menu.css">
     <link rel=stylesheet type="text/css" href="./css/game.css">
     <link rel=stylesheet type="text/css" href="./css/custom.css">
+    <link rel=stylesheet type="text/css" href="./css/draw.css">
+    <link rel=stylesheet type="text/css" href="./css/win.css">
+    <link rel=stylesheet type="text/css" href="./css/timeout.css">
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
 </head>
@@ -149,6 +152,35 @@
 
     </div>
 
+
+    <!-- Draw 面板 -->
+    <div class="draw-board" id="draw-board" style="display: none;">
+        <button class="back-menu-button" onclick="menu();">
+            <div class="menu-icon"></div>
+            <div class="menu-text">MENU</div>
+        </button>
+        <div class="draw-result">
+                <div class="draw-text">
+                    DRAW
+                </div>
+        </div>
+    </div>
+    
+    <!-- Win 面板 -->
+    <div class="win-board" id="win-board" style="display: none;">
+        <button class="back-menu-button" onclick="menu();">
+            <div class="menu-icon"></div>
+            <div class="menu-text">MENU</div>
+        </button>
+    </div>
+
+    <!-- TimeOut 面板 -->
+    <div class="timeout-board" id="timeout-board" style="display: none;">
+        <button class="back-menu-button" onclick="menu();">
+            <div class="menu-icon"></div>
+            <div class="menu-text">MENU</div>
+        </button>
+    </div>
 
 
 
