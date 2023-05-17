@@ -23,7 +23,6 @@ const menuBoard = $("#menu-board");
 const gameBoard = $("#game-board");
 const customBoard = $("#custom-board");
 
-
 function hideAllBoard() {
   startupBoard.hide();
   coverBoard.hide();
@@ -31,7 +30,6 @@ function hideAllBoard() {
   gameBoard.hide();
   customBoard.hide();
 }
-
 
 function loadStartupView() {
   hideAllBoard();
@@ -45,6 +43,7 @@ function loadStartupView() {
 }
 
 function loadCoverView() {
+  stopAllSound();
   hideAllBoard();
   coverBoard.fadeIn(1000);
 }
@@ -52,6 +51,7 @@ function loadCoverView() {
 function loadMenuView() {
   hideAllBoard();
   menuBoard.show();
+  playBGM();
 }
 
 function loadGameView() {
@@ -66,7 +66,21 @@ function loadCustomView() {
   customBoard.show();
 }
 
+function unloadStartupView() {}
+
+function unloadCoverView() {}
+
+function unloadMenuView() {}
+
+function unloadGameView() {
+  stopGame();
+}
+
+function unloadCustomView() {}
+
+let lastHashTag = undefined;
 function updateBoardView() {
+  // Load View
   switch (getHashTag()) {
     case "startup":
       loadStartupView();
@@ -86,6 +100,29 @@ function updateBoardView() {
     default:
       moveToBoardView("startup");
       break;
+  }
+  // Unload View
+  if (lastHashTag != getHashTag()) {
+    switch (lastHashTag) {
+      case "startup":
+        unloadStartupView();
+        break;
+      case "cover":
+        unloadCoverView();
+        break;
+      case "menu":
+        unloadMenuView();
+        break;
+      case "game":
+        unloadGameView();
+        break;
+      case "custom":
+        unloadCustomView();
+        break;
+    }
+  }
+  if (lastHashTag != getHashTag()) {
+    lastHashTag = getHashTag();
   }
 }
 
@@ -108,9 +145,7 @@ function start() {
   moveToBoardView("game");
 }
 
-
-function custom() 
-{
+function custom() {
   moveToBoardView("custom");
 }
 
@@ -147,6 +182,10 @@ $(window).on("hashchange", function () {
 /**
  * Document Event
  */
+$(document).on("click", "body button, a, input", function () {
+  playClickSound();
+});
+
 $(document).ready(function () {
   updateBoardView();
 });

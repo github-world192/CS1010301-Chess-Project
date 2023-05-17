@@ -90,6 +90,7 @@ function startDragPiece(x, y) {
           let toY = parseInt($(this).attr("piece-container-y"));
           console.log(`fromX=${fromX}, fromY=${fromY}, toX=${toX}, toY=${toY}`);
           console.log(movePiece(fromX, fromY, toX, toY));
+          playMoveSound();
           updateGame();
         },
       });
@@ -99,6 +100,7 @@ function startDragPiece(x, y) {
 function stopDragPiece() {
   $("div[piece-container]").each(function () {
     $(this).removeClass("game-board-piece-container-droppable");
+    if ($(this).droppable()) $(this).droppable("destroy");
   });
 }
 
@@ -130,4 +132,8 @@ function loadGame() {
       }
     }
   }, 500);
+}
+
+function stopGame() {
+  window.clearInterval(gamePromotionTimer);
 }
