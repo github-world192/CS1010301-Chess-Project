@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:12:07
+ *  Update Date: 2023/05/17 16:08:43
  *  Description: Move Handler
  */
 
@@ -24,7 +24,7 @@ bool MoveHandler::isMoveValid(const Board &board, const Move &move)
         return false;
 
     std::vector<Position> movablePos =
-        MoveHandler::getMovablePositions(board, move.getFrom());
+        MoveHandler::getMovableKillablePositions(board, move.getFrom());
 
     for ( const Position &p : movablePos )
     {
@@ -532,13 +532,13 @@ std::vector<Position> MoveHandler::getPawnMovablePos(
     {
         Position realP = MoveHandler::_toRealPos(pos, p);
 
-        // If position invalid, contiune
+        // If position invalid, break
         if ( !(board.isPositionValid(realP)) )
-            continue;
+            break;
 
-        // If there a piece at position, contiune
+        // If there a piece at position, break
         if ( board.isPositionPiece(realP) )
-            continue;
+            break;
 
         movablePos.push_back(realP);
     }
@@ -571,8 +571,6 @@ std::vector<Position> MoveHandler::getPawnKillablePos(
                 // Append to movablePos
                 movablePos.push_back(realP);
         }
-        else
-            movablePos.push_back(realP);
     }
 
     return movablePos;
