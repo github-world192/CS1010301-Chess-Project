@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 14:37:01
+ *  Update Date: 2023/05/17 16:07:10
  *  Description: Chess Class
  */
 
@@ -21,7 +21,7 @@ Game::Game()
 
 std::vector<Position> Game::getBoardPieceMovablePos(const Position &pos) const
 {
-    return MoveHandler::getMovablePositions((Board &)(this->_board), pos);
+    return MoveHandler::getMovableKillablePositions((Board &)(this->_board), pos);
 }
 
 bool Game::makeMove(const Move &move)
