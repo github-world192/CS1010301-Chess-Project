@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:37
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 16:07:10
+ *  Update Date: 2023/05/20 02:47:30
  *  Description: Chess Class
  */
 
@@ -62,41 +62,43 @@ bool Game::makeMove(const Move &move)
 
 bool Game::isCheckmate() const
 {
-    TPlayer enemy = (this->_currentPlayerType == TPlayer::kBlack)
-                        ? TPlayer::kWhite
-                        : TPlayer::kBlack;
-
     std::vector<Position> kingPos =
         this->_board.findPiecesPos(this->_currentPlayerType, TPiece::kKing);
 
     // If king not exists, is checkmate
-    if ( kingPos.size() < 1 )
+    if ( kingPos.empty() )
         return true;
 
-    // Get all pieces movable positions without king
-    std::vector<Position> piecesPosWithoutKing =
-        this->_board.findPiecesPosExcept(this->_currentPlayerType, TPiece::kKing);
-
-    // Get king movable/killable positions
-    std::vector<Position> kingMovablePos =
-        MoveHandler::getMovableKillablePositions(this->_board, kingPos[0]);
-
-    // If there still have a way to move
-    if ( kingMovablePos.size() > 0 )
-        return false;
-
-    // Get all movable/killable position without king
-    std::vector<Position> movablePosWithoutKing;
-    for ( const Position &mp : piecesPosWithoutKing )
+    // If king is check
+    if ( MoveHandler::isCheck(this->_board, kingPos[0]) )
     {
-        std::vector<Position> movablePos =
-            MoveHandler::getMovableKillablePositions(this->_board, mp);
-        movablePosWithoutKing.insert(movablePosWithoutKing.end(),
-                                     movablePos.begin(), movablePos.end());
-    }
+        // Check is king movable
+        std::vector<Position> kingMovablePos =
+            MoveHandler::getMovableKillablePositions(this->_board, kingPos[0]);
+        // If king can move, not checkmate
+        if ( !kingMovablePos.empty() )
+            return false;
 
-    // If there still have a way to move, not checkmate
-    if ( movablePosWithoutKing.size() != 0 )
+        // Can the current player's pieces stop checkmate
+        std::vector<Position> currentPlayerPiecesPos =
+            this->_board.findPiecesPos(this->_currentPlayerType);
+        for ( const Position &pos : currentPlayerPiecesPos )
+        {
+            std::vector<Position> movablePos =
+                MoveHandler::getMovableKillablePositions(this->_board, pos);
+            for ( const Position &movePos : movablePos )
+            {
+                // Try to move the piece
+                Board tempBoard(this->_board);
+                tempBoard.move(pos, movePos);
+                std::cout << tempBoard.toString() << std::endl;
+                // If stop checkmate after this move, not checkmate
+                if ( !(MoveHandler::isCheck(tempBoard, kingPos[0])) )
+                    return false;
+            }
+        }
+    }
+    else
         return false;
 
     return true;
@@ -130,12 +132,14 @@ void Game::updateGameState()
     if ( this->getPlayerTime(TPlayer::kBlack) <= 0 )
     {
         this->_state = TGameState::kWhiteWin;
+        this->_gameOverType = TGameOver::kTimeout;
         return;
     }
 
     if ( this->getPlayerTime(TPlayer::kWhite) <= 0 )
     {
         this->_state = TGameState::kBlackWin;
+        this->_gameOverType = TGameOver::kTimeout;
         return;
     }
 
@@ -144,6 +148,7 @@ void Game::updateGameState()
         this->_state = (this->_currentPlayerType == TPlayer::kBlack)
                            ? TGameState::kWhiteWin
                            : TGameState::kBlackWin;
+        this->_gameOverType = TGameOver::kCheckmate;
     }
 }
 

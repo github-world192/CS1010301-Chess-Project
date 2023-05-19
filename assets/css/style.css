@@ -9,8 +9,20 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    display:flex;
+    display: flex;
     background-color: black;
+    font-family: 'FrostbiteBossFight', -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+}
+
+button {
+    font-family: 'FrostbiteBossFight', -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+}
+
+input {
     font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
 }
 
+@font-face {
+    font-family: 'FrostbiteBossFight';
+    src: url('../font/FrostbiteBossFight-dL0Z.ttf') format('truetype');
+}  

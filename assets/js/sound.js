@@ -14,11 +14,11 @@ function playBGM() {
 }
 
 function playClickSound() {
+  if (soundClick.paused) soundClick.play();
   soundClick.currentTime = 0;
-  soundClick.play();
 }
 
 function playMoveSound() {
+  if (soundMove.paused) soundMove.play();
   soundMove.currentTime = 0;
-  soundMove.play();
 }

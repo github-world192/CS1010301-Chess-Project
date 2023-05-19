@@ -3,11 +3,12 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/04/22 20:39:44
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 22:56:23
+ *  Update Date: 2023/05/20 02:56:00
  *  Description: GUI
  */
 
 #include "gui/GUI.hpp"
+#include "core/GameOverUtil.hpp"
 #include "core/GameStateUtil.hpp"
 #include "core/player/PlayerUtil.hpp"
 
@@ -240,6 +241,21 @@ void GUI::OnDOMReady(ultralight::View *caller,
     JSStringRelease(name_GetGameState);
 
     /**
+     * GetGameOverType
+     */
+    JSStringRef name_GetGameOverType =
+        JSStringCreateWithUTF8CString("apiGetGameOverType");
+
+    JSObjectRef func_GetGameOverType =
+        JSObjectMakeFunctionWithCallback(ctx, name_GetGameOverType,
+                                         GUI::GetGameOverType);
+
+    JSObjectSetProperty(ctx, globalObj, name_GetGameOverType,
+                        func_GetGameOverType, 0, 0);
+
+    JSStringRelease(name_GetGameOverType);
+
+    /**
      * GetPlayerClock
      */
     JSStringRef name_GetPlayerClock =
@@ -450,6 +466,20 @@ JSValueRef GUI::GetGameState(JSContextRef ctx, JSObjectRef function,
                              JSValueRef *exception)
 {
     std::string state = GameStateUtil::typeToStr(game.getGameState());
+
+    JSStringRef r_str = JSStringCreateWithUTF8CString(state.c_str());
+    JSValueRef r = JSValueMakeString(ctx, r_str);
+    JSStringRelease(r_str);
+
+    return r;
+}
+
+JSValueRef GUI::GetGameOverType(JSContextRef ctx, JSObjectRef function,
+                                JSObjectRef thisObject, size_t argumentCount,
+                                const JSValueRef arguments[],
+                                JSValueRef *exception)
+{
+    std::string state = GameOverUtil::typeToStr(game.getGameOverType());
 
     JSStringRef r_str = JSStringCreateWithUTF8CString(state.c_str());
     JSValueRef r = JSValueMakeString(ctx, r_str);

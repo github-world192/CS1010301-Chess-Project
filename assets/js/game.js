@@ -1,12 +1,32 @@
+
+
 function getPiecePicUrl(type, owner) {
   let url = "./image/piece/";
   url += type + "-" + owner + ".png";
   return url;
 }
 
-function updateCurrentPlayer() {
-  $("#current_player").text(apiGetCurrentPlayer());
+function getRolePicUrl(type, owner) {
+  let url = "./image/role/";
+  url += type + "-" + owner + ".png";
+  return url;
 }
+
+$(function (){
+  // 綁定滑鼠移入事件
+
+});
+
+function bindPlayerImgChange(){
+  $('img[owner="black"]', '.game-board-piece-spot').hover(function() {
+    let url = getRolePicUrl($(this).data('pieceType'), $(this).attr('owner'));
+    $('.game-player1-chess-role img').attr('src', url);
+});
+$('img[owner="white"]', '.game-board-piece-spot').hover(function() {
+    let url = getRolePicUrl($(this).data('pieceType'), $(this).attr('owner'));
+    $('.game-player2-chess-role img').attr('src', url);
+  });
+};
 
 function updateBoard() {
   let boardData = apiGetBoard();
@@ -26,6 +46,8 @@ function updateBoard() {
       if (pieceData.type != "null") {
         let pieceImg = $(`<img alt="">`);
         pieceImg.attr("src", getPiecePicUrl(pieceData.type, pieceData.owner));
+        pieceImg.attr("data-piece-type", pieceData.type);
+        pieceImg.attr("owner", pieceData.owner);
 
         let piece = $(
           `<div class="game-board-piece-piece" piece-piece></div>`
@@ -58,7 +80,10 @@ function updateBoard() {
     }
     boardBody.append(tr);
   }
+  bindPlayerImgChange();
 }
+
+
 
 function updateGame() {
   //   updateCurrentPlayer();

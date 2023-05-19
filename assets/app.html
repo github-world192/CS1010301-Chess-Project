@@ -11,6 +11,7 @@
     <link rel=stylesheet type="text/css" href="./css/game.css">
     <link rel=stylesheet type="text/css" href="./css/custom.css">
     <link rel=stylesheet type="text/css" href="./css/win.css">
+    <script src="./js/fontawesome/all.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
 </head>
@@ -54,8 +55,8 @@
             <button onclick="start();"> <span>Classic Game</span></button>
             <button onclick="custom();"> <span>Custom Game</span></button>
             <button onclick="online();" style="color:gray"> <span>Online</span></button>
-            <button onclick="options();"> <span>Options</span></button>
-            <button onclick="about();"> <span>About</span></button>
+            <button onclick="options();" style="color:gray"> <span>Options</span></button>
+            <button onclick="about();" style="color:gray"> <span>About</span></button>
             <button onclick="exit();"> <span>Exit</span></button>
         </div>
 
@@ -71,7 +72,7 @@
     <!-- Custom 面版 -->
     <div class="custom-board" id="custom-board" style="display:none;">
         <div class="custom-back-button" onclick="menu();">
-            Back
+            <i class="fa-solid fa-arrow-left"></i>
         </div>
 
         <!-- First Player -->
@@ -126,11 +127,11 @@
         <!-- <div class="game-time-time-container">10:00</div> -->
 
         <div class="game-player1-chess-role">
-
+            <img src="" alt="">
         </div>
 
         <div class="game-player2-chess-role">
-
+            <img src="" alt="">
         </div>
 
         <div class="game-promotion-cover" id="promotion" style="display: none;">
@@ -170,6 +171,15 @@
                 <div class="menu-icon"></div>
                 <div class="menu-text">MENU</div>
                 </button> -->
+    </div>
+
+    <!-- Win 面板 -->
+    <div class="win-board" id="win-board" style="display: none;">
+        <button class="back-menu-button" onclick="menu();">
+            <div class="menu-icon"></div>
+            <div class="menu-text">MENU</div>
+        </button>
+
     </div>
 
     <script src="./js/api.js"></script>
