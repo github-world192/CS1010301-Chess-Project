@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/09 22:57:49
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 22:26:44
+ *  Update Date: 2023/05/20 02:48:23
  *  Description: Game Class
  */
 
@@ -11,6 +11,7 @@
 
 #include "Board.hpp"
 #include "Move.hpp"
+#include "TGameOver.hpp"
 #include "TGameState.hpp"
 #include "Timer.hpp"
 #include "player/Player.hpp"
@@ -28,6 +29,7 @@ namespace Chess
         std::vector<Player> _players;
         TPlayer _currentPlayerType;
         TGameState _state;
+        TGameOver _gameOverType;
         Timer _timerBlack;
         Timer _timerWhite;
         time_t _matchTime;
@@ -53,6 +55,7 @@ namespace Chess
             this->_players.push_back(Player(TPlayer::kBlack));
             this->_currentPlayerType = first;
             this->_state = TGameState::kActive;
+            this->_gameOverType = TGameOver::kNone;
             this->_board.clear();
             this->_board.loadDefaultBoard();
             this->_timerBlack.reset();
@@ -105,11 +108,14 @@ namespace Chess
 
         inline TGameState getGameState() const { return this->_state; }
 
+        inline TGameOver getGameOverType() const { return this->_gameOverType; }
+
         inline void resign()
         {
             (this->_currentPlayerType == TPlayer::kBlack)
                 ? this->_state = TGameState::kWhiteWin
                 : this->_state = TGameState::kBlackWin;
+            this->_gameOverType = TGameOver::kResignation;
         }
 
         std::vector<Position> getBoardPieceMovablePos(const Position &pos) const;
