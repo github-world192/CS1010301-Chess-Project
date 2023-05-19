@@ -167,9 +167,8 @@
     position: absolute;
     width: 637px;
     height: 807px;
-    left: 5%;
-    top: 10%;
-    background: url(../image/chess-role/player1-pawn.png);
+    left: 12%;
+    top: 20%;
     z-index: 1;
 }
 
@@ -178,9 +177,8 @@
     position: absolute;
     width: 637px;
     height: 807px;
-    left: 60%;
-    top: 10%;
-    background: url(../image/chess-role/player2-pawn.png);
+    left: 75%;
+    top: 20%;
     z-index: 1;
 }
 
