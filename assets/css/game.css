@@ -18,6 +18,9 @@
     position: absolute;
     z-index: 2;
     display: grid;
+    background: var(--game-board-piece-spot-light-background);
+    border-radius: 6px;
+    box-shadow: 0px 0px 12px 2px black;
 }
 .game-board-grid-item {
     display: flex;
@@ -33,12 +36,12 @@
 }
 
 .game-board-piece-container-droppable {
-    box-shadow: inset 0px 0px 0px 4px darkgray;
+    box-shadow: inset 0px 0px 0px 4px #E8CE84;
 }
 
 .game-board-piece-container-droppable-hover {
     animation: none;
-    box-shadow: inset 0px 0px 0px 10px gray;
+    box-shadow: inset 0px 0px 0px 10px #E8CE84;
 }
 
 .game-board-piece-piece-movable {
@@ -65,6 +68,26 @@
 
 .game-board-grid-item:nth-child(even) .game-board-piece-spot:nth-child(even) {
     background: var(--game-board-piece-spot-dark-background);
+}
+
+.game-board-grid-item:first-child .game-board-piece-spot {
+    border-top-left-radius: 6px;;
+    border-top-right-radius: 6px;;
+}
+
+.game-board-grid-item .game-board-piece-spot:first-child {
+    border-top-left-radius: 6px;;
+    border-bottom-left-radius: 6px;;
+}
+
+.game-board-grid-item:last-child .game-board-piece-spot {
+    border-bottom-left-radius: 6px;;
+    border-bottom-right-radius: 6px;;
+}
+
+.game-board-grid-item .game-board-piece-spot:last-child {
+    border-top-right-radius: 6px;;
+    border-bottom-right-radius: 6px;;
 }
 
 .game-player1-label-container {
