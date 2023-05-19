@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 16:34:28
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 16:08:43
+ *  Update Date: 2023/05/20 02:29:21
  *  Description: Move Handler
  */
 
@@ -70,8 +70,34 @@ bool MoveHandler::isPromoting(const Board &board, const Position &pos)
     return false;
 }
 
+bool MoveHandler::isCheck(const Board &board, const Position &pos)
+{
+    if ( !(board.isPositionValid(pos)) )
+        return false;
+
+    if ( !(board.isPositionPiece(pos)) )
+        return false;
+
+    const IPiece *piece = board(pos);
+    switch ( piece->type() )
+    {
+    case TPiece::kKing:
+    {
+        King *king = (King *)piece;
+        King &kingRef = *king;
+        return MoveHandler::isKingCheck(board, kingRef, pos);
+    }
+    break;
+
+    default:
+        break;
+    }
+
+    return false;
+}
+
 std::vector<Position>
-MoveHandler::getMovablePositions(const Board &board, const Position &pos)
+MoveHandler::getMovablePositions(const Board &board, const Position &pos, bool kingCantDie)
 {
     std::vector<Position> movablePos;
     const IPiece *piece = board(pos);
@@ -90,7 +116,8 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
     {
         King *king = (King *)piece;
         King &kingRef = *king;
-        movablePos = MoveHandler::getKingMovablePos(board, kingRef, pos);
+        movablePos =
+            MoveHandler::getKingMovablePos(board, kingRef, pos, kingCantDie);
     }
     break;
 
@@ -131,7 +158,8 @@ MoveHandler::getMovablePositions(const Board &board, const Position &pos)
 }
 
 std::vector<Position>
-MoveHandler::getKillablePositions(const Board &board, const Position &pos)
+MoveHandler::getKillablePositions(const Board &board, const Position &pos,
+                                  bool kingCantDie, bool includeBlankSpot)
 {
     std::vector<Position> killableRelativePos;
     std::vector<Position> killablePos;
@@ -153,7 +181,7 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
         King *king = (King *)piece;
         King &kingRef = *king;
         killablePos =
-            MoveHandler::getKingKillablePos(board, kingRef, pos);
+            MoveHandler::getKingKillablePos(board, kingRef, pos, kingCantDie);
     }
     break;
 
@@ -169,7 +197,8 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
     {
         Pawn *pawn = (Pawn *)piece;
         Pawn &pawnRef = *pawn;
-        killablePos = MoveHandler::getPawnKillablePos(board, pawnRef, pos);
+        killablePos =
+            MoveHandler::getPawnKillablePos(board, pawnRef, pos, includeBlankSpot);
     }
     break;
 
@@ -205,13 +234,13 @@ MoveHandler::getKillablePositions(const Board &board, const Position &pos)
 }
 
 std::vector<Position> MoveHandler::getMovableKillablePositions(
-    const Board &board, const Position &pos)
+    const Board &board, const Position &pos, bool kingCantDie)
 {
     std::vector<Position> positions;
     std::vector<Position> movablePositions =
-        MoveHandler::getMovablePositions(board, pos);
+        MoveHandler::getMovablePositions(board, pos, kingCantDie);
     std::vector<Position> killablePositions =
-        MoveHandler::getKillablePositions(board, pos);
+        MoveHandler::getKillablePositions(board, pos, kingCantDie);
 
     // Get movable positions
     positions.insert(positions.end(),
@@ -319,8 +348,8 @@ std::vector<Position> MoveHandler::getBishopKillablePos(
     return MoveHandler::getBishopMovablePos(board, bishop, pos);
 }
 
-bool MoveHandler::_isKingPosKillable(const Board &board, const Position &pos,
-                                     TPlayer player)
+bool MoveHandler::isKingPosKillable(const Board &board, const Position &pos,
+                                    TPlayer player)
 {
     TPlayer enemy = (player == TPlayer::kBlack)
                         ? TPlayer::kWhite
@@ -331,7 +360,7 @@ bool MoveHandler::_isKingPosKillable(const Board &board, const Position &pos,
     {
         std::cout << "enemy_pos = (" << p.x << ", " << p.y << ")" << std::endl;
         std::vector<Position> enemyKillablePos =
-            MoveHandler::getKillablePositions(board, p);
+            MoveHandler::getKillablePositions(board, p, false, true);
         for ( const Position &ekp : enemyKillablePos )
         {
             std::cout << "(" << ekp.x << ", " << ekp.y << ")" << std::endl;
@@ -342,8 +371,33 @@ bool MoveHandler::_isKingPosKillable(const Board &board, const Position &pos,
     return false;
 }
 
+bool MoveHandler::isKingCheck(const Board &board, const King &piece,
+                              const Position &pos)
+{
+    TPlayer enemy = (piece.getOwner() == TPlayer::kBlack)
+                        ? TPlayer::kWhite
+                        : TPlayer::kBlack;
+
+    // Get all enemy pieces position
+    std::vector<Position> enemyPos = board.findPiecesPos(enemy);
+    for ( const Position &ePos : enemyPos )
+    {
+        // Get piece all movable/killable positions
+        std::vector<Position> movablePos =
+            MoveHandler::getMovableKillablePositions(board, ePos);
+        for ( const Position &movePos : movablePos )
+        {
+            // If the movable/killable position is king's location, is “check”
+            if ( movePos == pos )
+                return true;
+        }
+    }
+
+    return false;
+}
+
 std::vector<Position> MoveHandler::getKingMovablePos(
-    const Board &board, const King &king, const Position &pos)
+    const Board &board, const King &king, const Position &pos, bool kingCantDie)
 {
     std::vector<Position> movablePos;
 
@@ -358,6 +412,13 @@ std::vector<Position> MoveHandler::getKingMovablePos(
         // If position invalid, break
         if ( !(board.isPositionValid(realP)) )
             continue;
+
+        if ( kingCantDie )
+        {
+            // If the new position will let king die, its illegal
+            if ( MoveHandler::isKingPosKillable(board, realP, king.getOwner()) )
+                continue;
+        }
 
         // If there a piece at position
         if ( board.isPositionPiece(realP) )
@@ -381,7 +442,7 @@ std::vector<Position> MoveHandler::getKingMovablePos(
 }
 
 std::vector<Position> MoveHandler::getKingKillablePos(
-    const Board &board, const King &king, const Position &pos)
+    const Board &board, const King &king, const Position &pos, bool kingCantDie)
 {
     std::vector<Position> movablePos;
 
@@ -396,6 +457,13 @@ std::vector<Position> MoveHandler::getKingKillablePos(
         // If position invalid, break
         if ( !(board.isPositionValid(realP)) )
             continue;
+
+        if ( kingCantDie )
+        {
+            // If the new position will let king die, its illegal
+            if ( MoveHandler::isKingPosKillable(board, realP, king.getOwner()) )
+                continue;
+        }
 
         // If there a piece at position
         if ( board.isPositionPiece(realP) )
@@ -413,7 +481,8 @@ std::vector<Position> MoveHandler::getKingKillablePos(
 
 std::vector<Position> MoveHandler::getKingCastlingPos(
     const Board &board, const King &king,
-    const Position &pos, std::vector<std::pair<Move, Move>> &castlingMove)
+    const Position &pos, std::vector<std::pair<Move, Move>> &castlingMove,
+    bool kingCantDie)
 {
     castlingMove.clear(); // For save valid castling move pair
     std::vector<Position> movablePos;
@@ -453,17 +522,21 @@ std::vector<Position> MoveHandler::getKingCastlingPos(
                     // Calculate castling position
                     Position castlingPos = pos + (cd * 2);       // King new pos
                     Position rookCastlingPos = castlingPos - cd; // Rook new pos
-                    // If the castling position will not let king death
-                    if ( !(MoveHandler::_isKingPosKillable(board, castlingPos,
-                                                           king.getOwner())) )
+
+                    if ( kingCantDie )
                     {
-                        movablePos.push_back(castlingPos);
-                        // Save valid castling move pair
-                        castlingMove.push_back(
-                            std::pair<Move, Move>(
-                                Move(king.getOwner(), pos, castlingPos),
-                                Move(king.getOwner(), rookP, rookCastlingPos)));
+                        // If the castling position will let king die
+                        if ( MoveHandler::isKingPosKillable(board, castlingPos,
+                                                            king.getOwner()) )
+                            continue;
                     }
+
+                    movablePos.push_back(castlingPos);
+                    // Save valid castling move pair
+                    castlingMove.push_back(
+                        std::pair<Move, Move>(
+                            Move(king.getOwner(), pos, castlingPos),
+                            Move(king.getOwner(), rookP, rookCastlingPos)));
                     break;
                 }
 
@@ -547,7 +620,8 @@ std::vector<Position> MoveHandler::getPawnMovablePos(
 }
 
 std::vector<Position> MoveHandler::getPawnKillablePos(
-    const Board &board, const Pawn &pawn, const Position &pos)
+    const Board &board, const Pawn &pawn, const Position &pos,
+    bool includeBlankSpot)
 {
     int8_t dir = pawn.isBlack() ? 1 : -1;
 
@@ -560,14 +634,22 @@ std::vector<Position> MoveHandler::getPawnKillablePos(
     {
         Position realP = MoveHandler::_toRealPos(pos, p);
 
-        // If position invalid, break
+        // If position invalid
         if ( !(board.isPositionValid(realP)) )
             continue;
 
         // If there a piece at position
         if ( board.isPositionPiece(realP) )
         {
+            // If the new position piece is a friendly
             if ( board(realP)->getOwner() != pawn.getOwner() )
+                // Append to movablePos
+                movablePos.push_back(realP);
+        }
+        else
+        {
+            // If include blank position
+            if ( includeBlankSpot )
                 // Append to movablePos
                 movablePos.push_back(realP);
         }

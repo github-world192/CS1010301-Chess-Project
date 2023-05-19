@@ -1,10 +1,10 @@
 /**
- *  File: Filename
+ *  File: TGameState.hpp
  *  Author: 鄭健廷 (B11130225@mail.ntust.edu.tw)
  *  Create Date: 2023/05/16 21:34:23
- *  Editor: 鄭健廷 (B11130225@mail.ntust.edu.tw)
- *  Update Date: 2023/05/16 22:08:11
- *  Description:
+ *  Editor: 張皓鈞(HAO) m831718@gmail.com
+ *  Update Date: 2023/05/20 02:41:20
+ *  Description: GameState Type definition
  */
 
 #pragma once

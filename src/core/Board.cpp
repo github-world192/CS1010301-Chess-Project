@@ -3,7 +3,7 @@
  *  Author: 張皓鈞(HAO) m831718@gmail.com
  *  Create Date: 2023/05/11 01:46:16
  *  Editor: 張皓鈞(HAO) m831718@gmail.com
- *  Update Date: 2023/05/17 22:36:54
+ *  Update Date: 2023/05/20 02:07:05
  *  Description: Board Class
  */
 
@@ -18,64 +18,57 @@ Board::Board(const Board &board)
     this->_height = board._height;
 
     this->_board.resize(board._board.size());
-    size_t i = 0;
-    for ( const auto &it : board._board )
+    // std::cout << board.toString() << std::endl;
+    for ( size_t i = 0; i < board._board.size(); ++i )
     {
         this->_board[i].resize(board._board[i].size(), nullptr);
-        size_t j = 0;
 
-        for ( const auto &jt : it )
+        for ( size_t j = 0; j < board._board[i].size(); ++j )
         {
             IPiece *piece = nullptr;
 
             // If piece exist, create a copy
             if ( board._board[i][j] != nullptr )
             {
-                switch ( jt->type() )
+                std::cout << board._board[i][j]->getTypeString() << "\t";
+                switch ( board._board[i][j]->type() )
                 {
                 case TPiece::kBishop:
                 {
-                    Bishop &bishop = (Bishop &)piece;
-                    piece = new Bishop(bishop);
+                    piece = new Bishop(board._board[i][j]);
                     break;
                 }
                 case TPiece::kKing:
                 {
-                    King &king = (King &)piece;
-                    piece = new King(king);
+                    piece = new King(board._board[i][j]);
                     break;
                 }
                 case TPiece::kKnight:
                 {
-                    Knight &knight = (Knight &)piece;
-                    piece = new Knight(knight);
+                    piece = new Knight(board._board[i][j]);
                     break;
                 }
                 case TPiece::kPawn:
                 {
-                    Pawn &pawn = (Pawn &)piece;
-                    piece = new Pawn(pawn);
+                    piece = new Pawn(board._board[i][j]);
                     break;
                 }
                 case TPiece::kQueen:
                 {
-                    Queen &queen = (Queen &)piece;
-                    piece = new Queen(queen);
+                    piece = new Queen(board._board[i][j]);
                     break;
                 }
                 case TPiece::kRook:
                 {
-                    Rook &rook = (Rook &)piece;
-                    piece = new Rook(rook);
+                    piece = new Rook(board._board[i][j]);
                     break;
                 }
                 }
             }
 
             this->_board[i][j] = piece;
-            ++j;
         }
-        ++i;
+        // std::cout << std::endl;
     }
 }
 
