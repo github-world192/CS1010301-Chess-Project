@@ -27,6 +27,9 @@ cmake --build .
  - `--window` Launch in window mode
  - `--skip-intro` Launch skip intro animation and cover
 
+## Known Issues
+ - On windows platform, if the screen ratio is not set to 100%, it may cause window size problems. If you encounter this situation, it is recommended to use `--window` to run in windowed mode.
+ - The sound may play 2 times per click, or not when clicked, which appears to be caused by the HTML renderer UltraLight, and we have not yet found a solution to this problem.
 ## Features
 > ✋ Because of the limited time of the development team,  
 >    we haven't finished all the features yet, we always welcome pull request or issue.  
@@ -43,6 +46,7 @@ cmake --build .
 | ✅    | Display Clock | Display player's clock                         |
 | ✅    | Who First     | Set custom first player in custom mode         |
 | ❎    | FEN Standard  | Load custom game with FEN standard             |
+| ❎    | Online Mode   | Multiplayer online games                       |
 
 ## Design
 Beautiful and aesthetically pleasing user interface.  
