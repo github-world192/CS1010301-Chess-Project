@@ -1,6 +1,6 @@
 ![logo](https://github.com/CRT-HAO/CS1010301-Chess-Project/assets/31580253/4d23d7ba-d33a-4e83-b912-e2fdc20a0dd9)
 # CS1010301-Chess-Project
-111.2 CS1010301 物件導向程式設計實習 西洋棋遊戲  
+111.2 CS1010301 物件導向程式設計實習 西洋棋遊戲   
 An original chess game.  
 Written in C++ with web technology based GUI.  
 <img width="1485" alt="截圖 2023-05-25 下午4 47 40" src="https://github.com/CRT-HAO/CS1010301-Chess-Project/assets/31580253/2fc406f1-01dd-4a2a-acf6-ebf154a79f25">
